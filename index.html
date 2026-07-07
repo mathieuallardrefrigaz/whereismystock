@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -29,7 +29,7 @@
   header {
     background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, #1a4a73 100%);
     color: #fff;
-    padding: 28px 20px 22px;
+    padding: 28px 20px 40px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -52,7 +52,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 12px;
-    margin: -34px auto 22px;
+    margin: -46px auto 22px;
     position: relative; z-index: 2;
   }
   .stat {
@@ -79,10 +79,7 @@
     gap: 10px;
     align-items: center;
   }
-  .search {
-    flex: 1 1 260px;
-    position: relative;
-  }
+  .search { flex: 1 1 260px; position: relative; }
   .search input {
     width: 100%;
     padding: 10px 14px 10px 38px;
@@ -114,7 +111,7 @@
   .chip:hover { border-color: var(--ice-dark); color: var(--ice-dark); }
   .chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
 
-  /* ---- Shipment cards ---- */
+  /* ---- Order cards ---- */
   .ship-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -131,9 +128,7 @@
     padding: 16px 18px 12px;
     border-bottom: 1px solid var(--border);
   }
-  .supplier-badge {
-    display: flex; align-items: center; gap: 10px;
-  }
+  .supplier-badge { display: flex; align-items: center; gap: 10px; }
   .supplier-dot {
     width: 38px; height: 38px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -153,44 +148,87 @@
     font-size: .8rem; font-weight: 700; letter-spacing: .3px;
     white-space: nowrap;
   }
+  .badge.ordered { background: #ede9fe; color: #6d28d9; }
   .badge.transit { background: #e0f2fe; color: var(--ice-dark); }
   .badge.imminent { background: #fef3c7; color: var(--amber); }
   .badge.late { background: #fee2e2; color: var(--red); }
   .badge.received { background: #dcfce7; color: var(--green); }
 
-  /* ---- Timeline ---- */
-  .timeline { padding: 18px 18px 8px; }
-  .tl-bar {
-    height: 10px; border-radius: 999px;
-    background: var(--border);
+  /* ---- Journey stepper : PO → Shipping → Route → Arrivée ---- */
+  .journey {
+    display: flex;
+    align-items: flex-start;
+    padding: 24px 22px 10px;
+    gap: 0;
+  }
+  .step {
+    flex: 0 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    width: 118px;
+  }
+  .step .ic {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: #f1f5f9;
+    border: 2.5px solid var(--border);
+    transition: all .2s;
+  }
+  .step.done .ic { background: #e0f2fe; border-color: var(--ice-dark); }
+  .step.current .ic {
+    background: #e0f2fe; border-color: var(--ice-dark);
+    box-shadow: 0 0 0 5px rgba(2,136,209,.18);
+    animation: pulse 2s infinite;
+  }
+  .step.received-step .ic { background: #dcfce7; border-color: var(--green); }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 4px rgba(2,136,209,.16); }
+    50% { box-shadow: 0 0 0 9px rgba(2,136,209,.06); }
+  }
+  .step .ttl { font-size: .78rem; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-top: 9px; font-weight: 700; }
+  .step .dt { font-size: .92rem; font-weight: 700; color: var(--navy); margin-top: 2px; }
+  .step .dt.approx { color: var(--ice-dark); }
+  .step .dt.pending { color: var(--muted); font-weight: 600; font-style: italic; }
+  .step .ic svg { width: 32px; height: 32px; }
+
+  .leg {
+    flex: 1 1 0;
     position: relative;
-    margin: 6px 0 8px;
+    height: 52px;
+    display: flex; align-items: center;
+    min-width: 40px;
   }
-  .tl-fill {
-    height: 100%; border-radius: 999px;
+  .leg .line {
+    width: 100%; height: 4px; border-radius: 999px;
+    background: var(--border);
+    position: relative; overflow: hidden;
+  }
+  .leg .line .fill {
+    position: absolute; inset: 0;
+    border-radius: 999px;
     background: linear-gradient(90deg, var(--ice-dark), var(--ice));
-    transition: width .5s;
+    transform-origin: left;
   }
-  .tl-fill.done { background: linear-gradient(90deg, #15803d, #4ade80); }
-  .tl-fill.late { background: linear-gradient(90deg, var(--amber), var(--red)); }
-  .tl-truck {
+  .leg.dashed .line { background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 16px); }
+  .leg .route {
+    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+    font-size: .76rem; color: var(--muted); white-space: nowrap; font-weight: 600;
+  }
+  .leg .truck-move {
     position: absolute; top: 50%;
-    transform: translate(-50%, -58%);
-    font-size: 1.25rem;
+    transform: translate(-50%, -66%);
+    font-size: 1.3rem;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
   }
-  .tl-labels {
-    display: flex; justify-content: space-between;
-    font-size: .8rem; color: var(--muted);
-  }
-  .tl-labels b { color: var(--text); }
+
   .eta-line {
     text-align: center;
-    padding: 10px 18px 14px;
+    padding: 14px 18px;
     font-size: 1.02rem;
   }
-  .eta-line b { color: var(--navy); font-size: 1.1rem; }
   .eta-line .window { color: var(--ice-dark); font-weight: 700; }
+  .eta-line .note { display: block; font-size: .8rem; color: var(--muted); margin-top: 3px; }
 
   /* ---- Items table ---- */
   .items { padding: 0 18px 16px; }
@@ -220,11 +258,16 @@
   }
   footer .how {
     background: #eaf3fb; border: 1px solid #cfe4f5; border-radius: 10px;
-    padding: 12px 16px; display: inline-block; text-align: left; max-width: 640px;
+    padding: 12px 16px; display: inline-block; text-align: left; max-width: 680px;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 700px) {
     .ship-meta { margin-left: 0; }
     header h1 { font-size: 1.4rem; }
+    .journey { flex-wrap: nowrap; padding: 24px 8px 6px; }
+    .step { width: 86px; }
+    .step .ic { width: 44px; height: 44px; font-size: 1.2rem; }
+    .step .ic svg { width: 26px; height: 26px; }
+    .leg .route { font-size: .62rem; }
   }
 </style>
 </head>
@@ -232,7 +275,7 @@
 
 <header>
   <h1><span class="truck">🚚</span>Où est mon stock?</h1>
-  <div class="sub">Suivi des shipments fournisseurs — Solution Réfrigaz</div>
+  <div class="sub">Suivi des commandes fournisseurs — Solution Réfrigaz</div>
   <div class="updated" id="updated"></div>
 </header>
 
@@ -242,7 +285,7 @@
   <div class="filters">
     <div class="search">
       <span class="icon">🔍</span>
-      <input type="text" id="search" placeholder="Chercher un item, # série, PO, facture…">
+      <input type="text" id="search" placeholder="Chercher un item, bon de commande, facture…">
     </div>
     <div class="chips" id="chips"></div>
   </div>
@@ -252,62 +295,157 @@
 
 <footer>
   <div class="how">
-    <b>Comment lire l'ETA :</b> l'arrivée est estimée à partir de la date de shipping + le délai de transit
-    typique du fournisseur (jours ouvrables). La fourchette s'ajuste au fur et à mesure qu'on accumule
-    l'historique réel des livraisons.<br><br>
-    <b>Nouveau shipment reçu par courriel?</b> Envoyez la facture PDF à Mathieu — le dashboard est mis à
-    jour et republié en quelques minutes.
+    <b>Cycle de vie d'une commande :</b> 💻 bon de commande → 🚚 expédition par le fournisseur →
+    arrivée chez Réfrigaz (Granby). L'arrivée est estimée avec le délai de transit typique du
+    fournisseur (jours ouvrables) et s'affine avec l'historique réel des livraisons. Tant qu'une
+    commande n'est pas expédiée, les dates sont approximatives.<br><br>
+    <b>Mise à jour :</b> les bons de commande déposés dans le dossier « Bons de commande » et les
+    factures fournisseurs sont intégrés au dashboard par Mathieu.
   </div>
 </footer>
 
 <script>
 /* ================================================================
-   DONNÉES — mises à jour via Claude à chaque nouvelle facture.
-   Dernière mise à jour : voir LAST_UPDATED.
+   DONNÉES — mises à jour via Claude (PO du dossier « Bons de
+   commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-02";
+const LAST_UPDATED = "2026-07-06"; // facture freight C00075773 intégrée (départ réel 3 juillet via RADIUS)
 
 const SUPPLIERS = {
   "nova-kool": {
     name: "Nova Kool Mfg ULC",
     city: "Coquitlam, BC",
     carrier: "ELEMENT",
-    transitMin: 7,   // jours ouvrables — estimé standard BC → QC (LTL)
+    leadTime: 5,     // jours ouvrables PO → shipping (estimé)
+    transitMin: 7,   // jours ouvrables de transit — estimé BC → QC (LTL)
     transitMax: 10,
     color: "#0288d1",
     initials: "NK"
+  },
+  "victron": {
+    name: "Victron Energy",
+    city: "Québec, QC",
+    carrier: "—",
+    leadTime: 4,     // jours ouvrables PO → shipping (estimé)
+    transitMin: 1,   // transit court : QC → Granby
+    transitMax: 3,
+    color: "#1d4ed8",
+    initials: "VE"
   }
-  // Ajouter les prochains fournisseurs ici (Victron, SOK, etc.)
+  // Ajouter les prochains fournisseurs ici (SOK, Dometic, etc.)
 };
 
-const SHIPMENTS = [
+const ORDERS = [
   {
-    invoice: "C00075765",
-    supplier: "nova-kool",
-    po: "2305",
-    shipDate: "2026-07-01",
-    receivedDate: null,   // mettre "AAAA-MM-JJ" quand le stock est arrivé
+    po: "2333",
+    supplier: "victron",
+    poDate: "2026-07-06",     // 💻 date du bon de commande
+    shipDate: null,           // 🚚 à remplir à la réception de la facture/confirmation
+    invoice: null,
+    receivedDate: null,
     items: [
-      {
-        sku: "RFU7100D DC",
-        desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (192 L) avec tiroir congélateur",
-        qty: 2,
-        serials: ["613990", "613991"]
-      },
-      {
-        sku: "R1900 DC",
-        desc: "Réfrigérateur marin 12/24 Vdc — 1.9 pi³ (54 L)",
-        qty: 2,
-        serials: ["614023", "614024"]
-      }
+      { sku: "ORI124838110", desc: "Victron Orion-Tr 12/48-8A (380W) — convertisseur DC-DC isolé", qty: 5 },
+      { sku: "ORI241260020", desc: "Victron Orion 24/12-60 — convertisseur DC-DC IP20 (Uout=13.2V)", qty: 10 },
+      { sku: "BPC121715106", desc: "Victron Blue Smart IP67 — chargeur 12/17(1) 120V NEMA 5-15", qty: 1 },
+      { sku: "SCC115110511", desc: "Victron SmartSolar MPPT 150/100-MC4 VE.Can", qty: 3 },
+      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 5 }
+    ]
+  },
+  {
+    // Groupage RADIUS — départ 3 juillet (facture freight C00075773, 6 palettes / 2 626 lb)
+    po: "2298 / 2305",
+    supplier: "nova-kool",
+    poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : date inconnue)
+    shipDate: "2026-07-03",
+    carrier: "RADIUS",
+    invoice: "C00075758, C00075759, C00075765",
+    receivedDate: null,       // mettre "AAAA-MM-JJ" quand le stock arrive
+    tagline: "Groupage 6 palettes (2 626 lb) — 19 unités + facture C00075764 à venir",
+    items: [
+      { sku: "RFU7100D DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (192 L) tiroir congélateur", qty: 14 },
+      { sku: "RFS7501 DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 7.5 pi³ (212 L) congélateur à gauche", qty: 1 },
+      { sku: "R3000 DC W", desc: "Réfrigérateur marin 12/24 Vdc — 2.6 pi³ (74 L)", qty: 1 },
+      { sku: "R3100 DC", desc: "Réfrigérateur marin 12/24 Vdc — 3.1 pi³ (88 L)", qty: 1 },
+      { sku: "R1900 DC", desc: "Réfrigérateur marin 12/24 Vdc — 1.9 pi³ (54 L)", qty: 2 }
+    ]
+  },
+  {
+    // Groupage ELEMENT/VAN — départ 26 juin (facture freight C00075749, 5 palettes / 2 701 lb)
+    po: "2270 / 2281",
+    supplier: "nova-kool",
+    poDate: null,             // déposer purorder_2270 / purorder_2281 pour compléter
+    shipDate: "2026-06-26",
+    carrier: "ELEMENT/VAN",
+    invoice: "C00075730, C00075731, C00075732, C00075736",
+    receivedDate: null,
+    tagline: "Groupage 5 palettes (2 701 lb) — 28 unités",
+    items: [
+      { sku: "RFU6400D DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (193 L) compresseur simple", qty: 10 },
+      { sku: "R4500 DC", desc: "Réfrigérateur marin 12/24 Vdc — 4.3 pi³ (122 L)", qty: 8 },
+      { sku: "RFU7300D DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (193 L) 2 compresseurs, tiroir congélateur", qty: 3 },
+      { sku: "R2600 DC", desc: "Réfrigérateur marin 12/24 Vdc — 2.4 pi³ (68 L)", qty: 3 },
+      { sku: "RFU6800 DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (192 L)", qty: 2 },
+      { sku: "R5810 DC", desc: "Réfrigérateur marin 12/24 Vdc — 5.8 pi³ (165 L)", qty: 2 }
+    ]
+  },
+  {
+    // Petit envoi postal
+    po: "2324",
+    supplier: "nova-kool",
+    poDate: null,
+    shipDate: "2026-06-29",
+    carrier: "CANADA POST",
+    invoice: "C00075763",
+    receivedDate: null,
+    items: [
+      { sku: "Freezer Door kit", desc: "Porte de congélateur — pour modèle R4500", qty: 1 }
+    ]
+  },
+  {
+    po: "2305",
+    supplier: "nova-kool",
+    poDate: "2026-06-03",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Reste de la commande — 24 unités",
+    items: [
+      { sku: "RFU9000", desc: "Nova Kool Réfrigérateur 12V/24V — 258 L / 9.1 pi³ Noir", qty: 1 },
+      { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 1 },
+      { sku: "R3802", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir sans congélateur", qty: 2 },
+      { sku: "RFU6400D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir congélateur tiroir (portes à gauche)", qty: 4 },
+      { sku: "R4500", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir", qty: 8 },
+      { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
+      { sku: "R4200", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir Slim", qty: 4 }
     ]
   }
 ];
 
 /* ================================================================
+   LOGO RÉFRIGAZ — flamme du logo officiel Solution Réfrigaz
+   (dégradé ambre → rouge, liseré bleu)
+   ================================================================ */
+const LOGO_SVG = `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="rgf" x1="0.35" y1="0" x2="0.55" y2="1">
+    <stop offset="0" stop-color="#FFB300"/>
+    <stop offset="0.45" stop-color="#F4511E"/>
+    <stop offset="1" stop-color="#D32F2F"/>
+  </linearGradient></defs>
+  <path d="M23 3 C21 8 16 12 13.5 18 C11 24 11.5 31 15 36 C18.5 41 25 43.5 31 42
+           C37.5 40.3 41.5 34.5 40.8 27.5 C40.4 23.5 38.2 20 36.8 15.5
+           C36.3 13.9 35.9 12.2 35.8 10.5 C34.2 13.2 32.2 15.2 30.2 16.2
+           C30.8 12 28.5 6.5 23 3 Z"
+        fill="#4fc3f7" transform="translate(-1.6, 2)"/>
+  <path d="M23 3 C21 8 16 12 13.5 18 C11 24 11.5 31 15 36 C18.5 41 25 43.5 31 42
+           C37.5 40.3 41.5 34.5 40.8 27.5 C40.4 23.5 38.2 20 36.8 15.5
+           C36.3 13.9 35.9 12.2 35.8 10.5 C34.2 13.2 32.2 15.2 30.2 16.2
+           C30.8 12 28.5 6.5 23 3 Z"
+        fill="url(#rgf)"/>
+</svg>`;
+
+/* ================================================================
    LOGIQUE — rien à modifier en bas de cette ligne.
    ================================================================ */
-const MS_DAY = 86400000;
 const today = new Date(); today.setHours(0,0,0,0);
 
 function parseDate(s) { const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
@@ -323,87 +461,91 @@ function addBusinessDays(date, n) {
   return d;
 }
 
-function businessDaysBetween(a, b) {
-  // jours ouvrables écoulés de a (exclu) à b (inclus)
-  let count = 0;
-  const d = new Date(a);
-  while (d < b) {
-    d.setDate(d.getDate() + 1);
-    const dow = d.getDay();
-    if (dow !== 0 && dow !== 6) count++;
-  }
-  return count;
-}
-
 const MONTHS_FR = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 function fmt(d) { return d.getDate() + " " + MONTHS_FR[d.getMonth()]; }
 function fmtFull(d) { return d.getDate() + " " + MONTHS_FR[d.getMonth()] + " " + d.getFullYear(); }
 
-function shipmentStatus(s) {
-  const sup = SUPPLIERS[s.supplier];
-  const ship = parseDate(s.shipDate);
-  const etaMin = addBusinessDays(ship, sup.transitMin);
-  const etaMax = addBusinessDays(ship, sup.transitMax);
+function orderStatus(o) {
+  const sup = SUPPLIERS[o.supplier];
+  let etaMin, etaMax, approx = false;
+  if (o.shipDate) {
+    const ship = parseDate(o.shipDate);
+    etaMin = addBusinessDays(ship, sup.transitMin);
+    etaMax = addBusinessDays(ship, sup.transitMax);
+  } else if (o.poDate) {
+    const expShip = addBusinessDays(parseDate(o.poDate), sup.leadTime);
+    if (expShip < today) {
+      // date d'expédition estimée déjà passée : à confirmer avec le fournisseur
+      etaMin = etaMax = null;
+    } else {
+      etaMin = addBusinessDays(expShip, sup.transitMin);
+      etaMax = addBusinessDays(expShip, sup.transitMax);
+    }
+    approx = true;
+  } else {
+    etaMin = etaMax = null; approx = true;
+  }
   let status, label, cls;
-  if (s.receivedDate) {
-    status = "received"; label = "✓ Reçu le " + fmt(parseDate(s.receivedDate)); cls = "received";
-  } else if (today > etaMax) {
+  if (o.receivedDate) {
+    status = "received"; label = "✓ Reçu le " + fmt(parseDate(o.receivedDate)); cls = "received";
+  } else if (!o.shipDate) {
+    status = "ordered"; label = "💻 Commandé — en attente d'expédition"; cls = "ordered";
+  } else if (etaMax && today > etaMax) {
     status = "late"; label = "⚠ En retard — vérifier avec le transporteur"; cls = "late";
-  } else if (today >= etaMin) {
+  } else if (etaMin && today >= etaMin) {
     status = "imminent"; label = "📍 Arrivée imminente"; cls = "imminent";
   } else {
     status = "transit"; label = "🚚 En transit"; cls = "transit";
   }
-  const elapsed = businessDaysBetween(ship, today);
-  const progress = s.receivedDate ? 100 : Math.min(96, Math.max(3, (elapsed / sup.transitMax) * 100));
-  return { status, label, cls, etaMin, etaMax, elapsed, progress };
+  return { status, label, cls, etaMin, etaMax, approx };
 }
 
 /* ---- Filtres ---- */
 let activeSupplier = "all";
 let searchTerm = "";
 
-function matches(s) {
-  if (activeSupplier !== "all" && s.supplier !== activeSupplier) return false;
+function matches(o) {
+  if (activeSupplier !== "all" && o.supplier !== activeSupplier) return false;
   if (!searchTerm) return true;
   const t = searchTerm.toLowerCase();
-  const sup = SUPPLIERS[s.supplier];
-  if (s.invoice.toLowerCase().includes(t)) return true;
-  if (s.po.toLowerCase().includes(t)) return true;
+  const sup = SUPPLIERS[o.supplier];
+  if ((o.invoice || "").toLowerCase().includes(t)) return true;
+  if (o.po.toLowerCase().includes(t)) return true;
   if (sup.name.toLowerCase().includes(t)) return true;
-  return s.items.some(it =>
+  return o.items.some(it =>
     it.sku.toLowerCase().includes(t) ||
-    it.desc.toLowerCase().includes(t) ||
-    it.serials.some(sn => sn.toLowerCase().includes(t))
+    it.desc.toLowerCase().includes(t)
   );
 }
 
 function hl(text) {
-  if (!searchTerm) return text;
+  if (!searchTerm || !text) return text;
   const t = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return text.replace(new RegExp("(" + t + ")", "gi"), "<mark>$1</mark>");
 }
 
 /* ---- Rendu ---- */
 function renderStats(visible) {
-  const active = visible.filter(s => !s.receivedDate);
-  const itemCount = active.reduce((n, s) => n + s.items.reduce((m, it) => m + it.qty, 0), 0);
+  const active = visible.filter(o => !o.receivedDate);
+  const itemCount = active.reduce((n, o) => n + o.items.reduce((m, it) => m + it.qty, 0), 0);
+  const waiting = active.filter(o => !o.shipDate).length;
   let next = null;
-  active.forEach(s => {
-    const st = shipmentStatus(s);
-    if (!next || st.etaMin < next) next = st.etaMin;
+  active.forEach(o => {
+    const st = orderStatus(o);
+    if (st.etaMin && (!next || st.etaMin < next)) next = st.etaMin;
   });
   document.getElementById("stats").innerHTML = `
-    <div class="stat"><div class="num">${active.length}</div><div class="lbl">Shipments en route</div></div>
-    <div class="stat"><div class="num">${itemCount}</div><div class="lbl">Items en route</div></div>
-    <div class="stat"><div class="num small">${next ? "~ " + fmt(next) : "—"}</div><div class="lbl">Prochaine arrivée</div></div>
-    <div class="stat"><div class="num">${Object.keys(SUPPLIERS).length}</div><div class="lbl">Fournisseurs</div></div>`;
+    <div class="stat"><div class="num">${active.length}</div><div class="lbl">Commandes actives</div></div>
+    <div class="stat"><div class="num">${itemCount}</div><div class="lbl">Items attendus</div></div>
+    <div class="stat"><div class="num">${waiting}</div><div class="lbl">En attente d'expédition</div></div>
+    <div class="stat"><div class="num small">${next ? "~ " + fmt(next) : "—"}</div><div class="lbl">Prochaine arrivée</div></div>`;
 }
 
 function renderChips() {
   let html = `<button class="chip ${activeSupplier==="all"?"active":""}" data-s="all">Tous</button>`;
   for (const key in SUPPLIERS) {
-    html += `<button class="chip ${activeSupplier===key?"active":""}" data-s="${key}">${SUPPLIERS[key].name.split(" ")[0] + " " + (SUPPLIERS[key].name.split(" ")[1]||"")}</button>`;
+    const short = SUPPLIERS[key].name.split(" ").slice(0,2).join(" ");
+    html += `<button class="chip ${activeSupplier===key?"active":""}" data-s="${key}">${short}</button>`;
   }
   const el = document.getElementById("chips");
   el.innerHTML = html;
@@ -412,29 +554,90 @@ function renderChips() {
   }));
 }
 
+function journeyHTML(o, st, sup) {
+  // Étape 1 : PO
+  const poDone = true;
+  const poDate = o.poDate ? fmtFull(parseDate(o.poDate)) : "—";
+  // Étape 2 : Expédition
+  const shipped = !!o.shipDate;
+  let shipTtl, shipTxt, shipCls;
+  if (shipped) { shipTtl = "Expédié"; shipTxt = fmtFull(parseDate(o.shipDate)); shipCls = ""; }
+  else if (o.poDate) {
+    const expShip = addBusinessDays(parseDate(o.poDate), sup.leadTime);
+    if (expShip < today) { shipTtl = "Expédition"; shipTxt = "à confirmer"; shipCls = "pending"; }
+    else { shipTtl = "Expédition prévue vers"; shipTxt = "le " + fmt(expShip); shipCls = "approx"; }
+  }
+  else { shipTtl = "Expédition"; shipTxt = "en attente"; shipCls = "pending"; }
+  // Étape 3 : Arrivée
+  const arrived = !!o.receivedDate;
+  let arrTtl, arrTxt, arrCls;
+  if (arrived) { arrTtl = "Arrivée"; arrTxt = fmtFull(parseDate(o.receivedDate)); arrCls = ""; }
+  else if (st.etaMin) { arrTtl = "Arrivée prévue vers"; arrTxt = "le " + fmt(st.etaMin) + " – " + fmt(st.etaMax); arrCls = "approx"; }
+  else { arrTtl = "Arrivée prévue vers"; arrTxt = "à confirmer"; arrCls = "pending"; }
+
+  const leg1Fill = shipped ? 1 : 0.45;
+  let leg2Fill = 0, truckPos = null;
+  if (arrived) leg2Fill = 1;
+  else if (shipped && st.etaMax) {
+    const total = st.etaMax - parseDate(o.shipDate);
+    const done = today - parseDate(o.shipDate);
+    leg2Fill = Math.min(.94, Math.max(.06, done / total));
+    truckPos = leg2Fill * 100;
+  }
+
+  const stepShip = arrived || shipped ? "done" : (o.poDate ? "current" : "");
+  const stepArr = arrived ? "done received-step" : (shipped ? "current" : "");
+
+  return `
+  <div class="journey">
+    <div class="step done">
+      <div class="ic">💻</div>
+      <div class="ttl">Bon de commande</div>
+      <div class="dt">${poDate}</div>
+    </div>
+    <div class="leg ${shipped ? "" : "dashed"}">
+      <div class="line"><div class="fill" style="transform:scaleX(${leg1Fill})"></div></div>
+    </div>
+    <div class="step ${stepShip}">
+      <div class="ic">🚚</div>
+      <div class="ttl">${shipTtl}</div>
+      <div class="dt ${shipCls}">${shipTxt}</div>
+    </div>
+    <div class="leg ${shipped ? "" : "dashed"}">
+      <div class="route">${sup.city} → Granby, QC</div>
+      <div class="line"><div class="fill" style="transform:scaleX(${leg2Fill})"></div></div>
+      ${truckPos !== null ? `<span class="truck-move" style="left:${truckPos}%">🚚</span>` : ""}
+    </div>
+    <div class="step ${stepArr}">
+      <div class="ic">${LOGO_SVG}</div>
+      <div class="ttl">${arrTtl}</div>
+      <div class="dt ${arrCls}">${arrTxt}</div>
+    </div>
+  </div>`;
+}
+
 function renderList(visible) {
   const list = document.getElementById("list");
   if (!visible.length) {
-    list.innerHTML = `<div class="empty"><div class="big">📭</div>Aucun shipment ne correspond à cette recherche.</div>`;
+    list.innerHTML = `<div class="empty"><div class="big">📭</div>Aucune commande ne correspond à cette recherche.</div>`;
     return;
   }
-  // Tri : non reçus d'abord (ETA la plus proche en premier), reçus ensuite
+  // Tri : non reçues d'abord (ETA la plus proche en premier), reçues ensuite
   visible.sort((a, b) => {
-    const sa = shipmentStatus(a), sb = shipmentStatus(b);
     if (!!a.receivedDate !== !!b.receivedDate) return a.receivedDate ? 1 : -1;
-    return sa.etaMin - sb.etaMin;
+    const ea = orderStatus(a).etaMin, eb = orderStatus(b).etaMin;
+    if (!ea) return 1; if (!eb) return -1;
+    return ea - eb;
   });
 
-  list.innerHTML = visible.map(s => {
-    const sup = SUPPLIERS[s.supplier];
-    const st = shipmentStatus(s);
-    const fillCls = st.status === "received" ? "done" : (st.status === "late" ? "late" : "");
-    const itemRows = s.items.map(it => `
+  list.innerHTML = visible.map(o => {
+    const sup = SUPPLIERS[o.supplier];
+    const st = orderStatus(o);
+    const itemRows = o.items.map(it => `
       <tr>
         <td class="sku">${hl(it.sku)}</td>
         <td>${hl(it.desc)}</td>
         <td class="qty">${it.qty}</td>
-        <td class="serials">${hl(it.serials.join(", "))}</td>
       </tr>`).join("");
     return `
     <div class="ship-card">
@@ -443,34 +646,25 @@ function renderList(visible) {
           <div class="supplier-dot" style="background:${sup.color}">${sup.initials}</div>
           <div>
             <div class="name">${hl(sup.name)}</div>
-            <div class="from">Depuis ${sup.city} · Transporteur : ${sup.carrier}</div>
+            <div class="from">Depuis ${sup.city}${(o.carrier || sup.carrier) !== "—" ? " · Transporteur : " + (o.carrier || sup.carrier) : ""}</div>
           </div>
         </div>
         <div class="ship-meta">
-          <span>Facture <b>${hl(s.invoice)}</b></span>
-          <span>PO <b>${hl(s.po)}</b></span>
-          <span>Shippé le <b>${fmtFull(parseDate(s.shipDate))}</b></span>
+          <span>Bon de commande <b>${hl(o.po)}</b></span>
+          ${o.invoice ? `<span>Facture fournisseur <b>${hl(o.invoice)}</b></span>` : ""}
+          ${o.tagline ? `<span style="color:#6d28d9;font-weight:600">${o.tagline}</span>` : ""}
         </div>
         <span class="badge ${st.cls}">${st.label}</span>
       </div>
-      <div class="timeline">
-        <div class="tl-bar">
-          <div class="tl-fill ${fillCls}" style="width:${st.progress}%"></div>
-          ${st.status !== "received" ? `<span class="tl-truck" style="left:${st.progress}%">🚚</span>` : ""}
-        </div>
-        <div class="tl-labels">
-          <span>Départ <b>${fmt(parseDate(s.shipDate))}</b></span>
-          <span>${st.status === "received" ? "" : st.elapsed + " jour" + (st.elapsed>1?"s":"") + " ouvrable" + (st.elapsed>1?"s":"") + " écoulé" + (st.elapsed>1?"s":"")}</span>
-          <span>Arrivée <b>${fmt(st.etaMax)}</b></span>
-        </div>
-      </div>
-      ${st.status !== "received" ? `
+      ${journeyHTML(o, st, sup)}
+      ${!o.receivedDate && st.etaMin ? `
       <div class="eta-line">
-        Arrivée estimée : <span class="window">entre le ${fmt(st.etaMin)} et le ${fmt(st.etaMax)}</span>
+        Arrivée estimée : <span class="window">${st.approx ? "≈ " : ""}entre le ${fmt(st.etaMin)} et le ${fmt(st.etaMax)}</span>
+        ${st.approx ? `<span class="note">Estimation basée sur la date du bon de commande — sera précisée à l'expédition</span>` : ""}
       </div>` : ""}
       <div class="items">
         <table>
-          <thead><tr><th>Item</th><th>Description</th><th style="text-align:center">Qté</th><th># Série</th></tr></thead>
+          <thead><tr><th>Item</th><th>Description</th><th style="text-align:center">Qté</th></tr></thead>
           <tbody>${itemRows}</tbody>
         </table>
       </div>
@@ -479,7 +673,7 @@ function renderList(visible) {
 }
 
 function render() {
-  const visible = SHIPMENTS.filter(matches);
+  const visible = ORDERS.filter(matches);
   renderStats(visible);
   renderChips();
   renderList(visible);
