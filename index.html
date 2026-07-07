@@ -356,11 +356,42 @@ const SUPPLIERS = {
     color: "#0f766e",
     initials: "CM",
     logo: "logos/camco.png"
+  },
+  "dometic": {
+    name: "Dometic Corporation",
+    city: "Calgary, AB",
+    carrier: "—",
+    leadTime: 5,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 6,   // transit AB → Granby (LTL)
+    transitMax: 9,
+    color: "#00203f",
+    initials: "DM",
+    logo: "logos/dometic.png"
   }
-  // Ajouter les prochains fournisseurs ici (SOK, Dometic, etc.)
+  // Ajouter les prochains fournisseurs ici (SOK, etc.)
 };
 
 const ORDERS = [
+  {
+    po: "2326",
+    supplier: "dometic",
+    poDate: "2026-06-30",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "d9620017662", desc: "Dometic Air climatisé RTX 2000 Blanc 12V — 6 824 BTU", qty: 1 },
+      { sku: "d9100300152", desc: "Dometic RTX 2000 — kit d'installation 12V", qty: 2 },
+      { sku: "d9620017217", desc: "Dometic Freshjet 5 Noir — thermopompe 15 000 BTU", qty: 1 },
+      { sku: "d4471011652", desc: "Dometic Freshjet — kit thermostat mural thermopompe", qty: 1 },
+      { sku: "d9105304487", desc: "Dometic Universal Air Distribution Box (application non gainée)", qty: 1 },
+      { sku: "dDM2672L", desc: "Dometic Réfrigérateur propane/120V — 173 L / 6 pi³ contour noir, pentures à gauche", qty: 2 },
+      { sku: "dDM2672R", desc: "Dometic Réfrigérateur propane/120V — 173 L / 6 pi³ contour noir, pentures à droite", qty: 2 },
+      { sku: "dDM2872L", desc: "Dometic Réfrigérateur propane/120V — 227 L / 8 pi³ contour noir, pentures à gauche", qty: 1 },
+      { sku: "DNRX0080C", desc: "Dometic Réfrigérateur 12V/24V — 75 L / 2.7 pi³ Dark Silver, pentures à droite", qty: 3 },
+      { sku: "d97000050757", desc: "Dometic Portable CFX5 75DZ 12V/24V/120V — 75 L / 2.7 pi³ Noir Dual Zone", qty: 1 }
+    ]
+  },
   {
     po: "2332",
     supplier: "unique",
