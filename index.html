@@ -334,11 +334,59 @@ const SUPPLIERS = {
     color: "#1d4ed8",
     initials: "VE",
     logo: "logos/victron.svg"
+  },
+  "unique": {
+    name: "Unique Appliances",
+    city: "Oakville, ON",
+    carrier: "—",
+    leadTime: 4,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 2,   // transit ON → Granby
+    transitMax: 4,
+    color: "#7c3aed",
+    initials: "UA",
+    logo: "logos/unique.png"
+  },
+  "camco": {
+    name: "Camco Manufacturing",
+    city: "Greensboro, NC (É.-U.)",
+    carrier: "—",
+    leadTime: 5,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 5,   // transit NC → Granby incluant douanes
+    transitMax: 8,
+    color: "#0f766e",
+    initials: "CM",
+    logo: "logos/camco.png"
   }
   // Ajouter les prochains fournisseurs ici (SOK, Dometic, etc.)
 };
 
 const ORDERS = [
+  {
+    po: "2332",
+    supplier: "unique",
+    poDate: "2026-07-03",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "UGP-30G OF1 W", desc: "Unique Cuisinière propane 30 po Classic — Blanc", qty: 6 },
+      { sku: "UGP-170L DC W", desc: "Unique Réfrigérateur 12V/24V — 170 L / 6 pi³ Blanc", qty: 1 },
+      { sku: "UGP-19C CM W", desc: "Unique Réfrigérateur propane — 539 L / 19 pi³ Blanc", qty: 1 },
+      { sku: "UGP-385L CR W", desc: "Unique Réfrigérateur 12V/24V Rétro — 385 L / 14 pi³ Blanc", qty: 1 },
+      { sku: "UGP-8C CM W", desc: "Unique Réfrigérateur propane — 227 L / 8 pi³ Blanc", qty: 1 }
+    ]
+  },
+  {
+    po: "2331",
+    supplier: "camco",
+    poDate: "2026-07-03",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "T11811", desc: "Kuuma chauffe-eau 6 gallons 120V avec échangeur de chaleur, montage Av/Ar (UL)", qty: 27 }
+    ]
+  },
   {
     po: "2333",
     supplier: "victron",
