@@ -135,6 +135,7 @@
     font-weight: 700; color: #fff; font-size: .95rem;
     flex-shrink: 0;
   }
+  .supplier-logo { height: 34px; max-width: 140px; object-fit: contain; flex-shrink: 0; }
   .supplier-badge .name { font-weight: 700; font-size: 1.05rem; }
   .supplier-badge .from { font-size: .8rem; color: var(--muted); }
   .ship-meta {
@@ -320,7 +321,8 @@ const SUPPLIERS = {
     transitMin: 7,   // jours ouvrables de transit — estimé BC → QC (LTL)
     transitMax: 10,
     color: "#0288d1",
-    initials: "NK"
+    initials: "NK",
+    logo: "logos/novakool.png"
   },
   "victron": {
     name: "Victron Energy",
@@ -330,7 +332,8 @@ const SUPPLIERS = {
     transitMin: 1,   // transit court : QC → Granby
     transitMax: 3,
     color: "#1d4ed8",
-    initials: "VE"
+    initials: "VE",
+    logo: "logos/victron.svg"
   }
   // Ajouter les prochains fournisseurs ici (SOK, Dometic, etc.)
 };
@@ -643,7 +646,9 @@ function renderList(visible) {
     <div class="ship-card">
       <div class="ship-head">
         <div class="supplier-badge">
-          <div class="supplier-dot" style="background:${sup.color}">${sup.initials}</div>
+          ${sup.logo
+            ? `<img class="supplier-logo" src="${sup.logo}" alt="${sup.name}" onerror="this.outerHTML='<div class=\\'supplier-dot\\' style=\\'background:${sup.color}\\'>${sup.initials}</div>'">`
+            : `<div class="supplier-dot" style="background:${sup.color}">${sup.initials}</div>`}
           <div>
             <div class="name">${hl(sup.name)}</div>
             <div class="from">Depuis ${sup.city}${(o.carrier || sup.carrier) !== "—" ? " · Transporteur : " + (o.carrier || sup.carrier) : ""}</div>
