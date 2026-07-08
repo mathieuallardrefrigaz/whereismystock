@@ -310,7 +310,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-08"; // Factures Brewers'/Unique/Pines + confirmations Camco/Dometic/Victron intégrées
+const LAST_UPDATED = "2026-07-08"; // BC reçus retirés : 2318, 2319 et groupage 2270/2281
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -509,25 +509,6 @@ const ORDERS = [
       { sku: "R3000 DC W", desc: "Réfrigérateur marin 12/24 Vdc — 2.6 pi³ (74 L)", qty: 1 },
       { sku: "R3100 DC", desc: "Réfrigérateur marin 12/24 Vdc — 3.1 pi³ (88 L)", qty: 1 },
       { sku: "R1900 DC", desc: "Réfrigérateur marin 12/24 Vdc — 1.9 pi³ (54 L)", qty: 2 }
-    ]
-  },
-  {
-    // Groupage ELEMENT/VAN — départ 26 juin (facture freight C00075749, 5 palettes / 2 701 lb)
-    po: "2270 / 2281",
-    supplier: "nova-kool",
-    poDate: null,             // déposer purorder_2270 / purorder_2281 pour compléter
-    shipDate: "2026-06-26",
-    carrier: "ELEMENT/VAN",
-    invoice: "C00075730, C00075731, C00075732, C00075736",
-    receivedDate: null,
-    tagline: "Groupage 5 palettes (2 701 lb) — 28 unités",
-    items: [
-      { sku: "RFU6400D DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (193 L) compresseur simple", qty: 10 },
-      { sku: "R4500 DC", desc: "Réfrigérateur marin 12/24 Vdc — 4.3 pi³ (122 L)", qty: 8 },
-      { sku: "RFU7300D DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (193 L) 2 compresseurs, tiroir congélateur", qty: 3 },
-      { sku: "R2600 DC", desc: "Réfrigérateur marin 12/24 Vdc — 2.4 pi³ (68 L)", qty: 3 },
-      { sku: "RFU6800 DC", desc: "Réfrigérateur/congélateur marin 12/24 Vdc — 6.8 pi³ (192 L)", qty: 2 },
-      { sku: "R5810 DC", desc: "Réfrigérateur marin 12/24 Vdc — 5.8 pi³ (165 L)", qty: 2 }
     ]
   },
   {
@@ -896,33 +877,6 @@ const ORDERS = [
       { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim congélateur tiroir", qty: 4 },
       { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
       { sku: "R3800", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir", qty: 4 }
-    ]
-  },
-  {
-    po: "2318",
-    supplier: "unique",
-    poDate: "2026-06-18",
-    shipDate: null,
-    invoice: null,
-    receivedDate: null,
-    items: [
-      { sku: "UGP-R30OCLP W", desc: "Unique Cuisinière propane 30 po Classic Rétro Blanc — four et grill combinés", qty: 6 },
-      { sku: "UGP-14C CM W", desc: "Unique Réfrigérateur propane — 400 L / 14 pi³ Blanc", qty: 4 },
-      { sku: "UGP-10C CM W", desc: "Unique Réfrigérateur propane — 275 L / 9.7 pi³ Blanc", qty: 2 },
-      { sku: "UGP-260L DC W", desc: "Unique Réfrigérateur 12V/24V — 260 L / 9 pi³ Blanc", qty: 1 },
-      { sku: "UGP-290L DC W", desc: "Unique Réfrigérateur 12V/24V — 290 L / 10.3 pi³ Blanc", qty: 1 },
-      { sku: "UGP-8C CM W", desc: "Unique Réfrigérateur propane — 227 L / 8 pi³ Blanc", qty: 1 }
-    ]
-  },
-  {
-    po: "2319",
-    supplier: "techspan",
-    poDate: "2026-06-19",
-    shipDate: null,
-    invoice: null,
-    receivedDate: null,
-    items: [
-      { sku: "sbreaker80", desc: "Disjoncteur 80 A surface", qty: 5 }
     ]
   },
   {
