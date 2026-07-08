@@ -310,7 +310,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-06"; // facture freight C00075773 intégrée (départ réel 3 juillet via RADIUS)
+const LAST_UPDATED = "2026-07-08"; // 22 nouveaux bons de commande intégrés (Techspan, Brewers', SOK, Pines RV, PowerMax, Victron, Dometic, Unique, Camco, Nova Kool)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -367,8 +367,63 @@ const SUPPLIERS = {
     color: "#00203f",
     initials: "DM",
     logo: "logos/dometic.png"
+  },
+  "techspan": {
+    name: "Techspan Industries",
+    city: "Oakville, ON",
+    carrier: "—",
+    leadTime: 3,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 2,   // transit ON → Granby
+    transitMax: 4,
+    color: "#b45309",
+    initials: "TI",
+    logo: null
+  },
+  "brewers": {
+    name: "Brewers' Marine Supply",
+    city: "Hamilton, ON",
+    carrier: "—",
+    leadTime: 3,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 2,   // transit ON → Granby
+    transitMax: 4,
+    color: "#0e7490",
+    initials: "BM",
+    logo: null
+  },
+  "sok": {
+    name: "SOK Battery",
+    city: "Zhuhai (Chine)",
+    carrier: "—",
+    leadTime: 10,    // jours ouvrables BC → expédition (estimé)
+    transitMin: 30,  // transit maritime Chine → Granby incluant douanes (estimé)
+    transitMax: 45,
+    color: "#ca8a04",
+    initials: "SK",
+    logo: null
+  },
+  "pines": {
+    name: "Pines RV Refrigeration",
+    city: "Shipshewana, IN (É.-U.)",
+    carrier: "—",
+    leadTime: 5,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 5,   // transit IN → Granby incluant douanes
+    transitMax: 8,
+    color: "#166534",
+    initials: "PR",
+    logo: null
+  },
+  "powermax": {
+    name: "PowerMax / Fieldstone Products",
+    city: "Bradenton, FL (É.-U.)",
+    carrier: "—",
+    leadTime: 5,     // jours ouvrables BC → expédition (estimé)
+    transitMin: 6,   // transit FL → Granby incluant douanes
+    transitMax: 10,
+    color: "#be185d",
+    initials: "PM",
+    logo: null
   }
-  // Ajouter les prochains fournisseurs ici (SOK, etc.)
+  // Ajouter les prochains fournisseurs ici
 };
 
 const ORDERS = [
@@ -437,7 +492,7 @@ const ORDERS = [
     // Groupage RADIUS — départ 3 juillet (facture freight C00075773, 6 palettes / 2 626 lb)
     po: "2298 / 2305",
     supplier: "nova-kool",
-    poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : date inconnue)
+    poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : 2026-05-25)
     shipDate: "2026-07-03",
     carrier: "RADIUS",
     invoice: "C00075758, C00075759, C00075765",
@@ -499,6 +554,425 @@ const ORDERS = [
       { sku: "R4500", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir", qty: 8 },
       { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
       { sku: "R4200", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir Slim", qty: 4 }
+    ]
+  },
+  {
+    po: "2244",
+    supplier: "techspan",
+    poDate: "2026-02-27",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "s#1 lug 5/16", desc: "Cosse #1 étamée 5/16", qty: 1 },
+      { sku: "s#1 lug 3/8", desc: "Cosse #1 — 3/8", qty: 1 },
+      { sku: "s#4 lug 1/4", desc: "Cosse #4 — 1/4", qty: 1 },
+      { sku: "s#4 lug 5/16", desc: "Cosse #4 — 5/16", qty: 1 },
+      { sku: "s#6 lug 5/16", desc: "Cosse #6 — 5/16", qty: 1 },
+      { sku: "s#6 lug 1/4", desc: "Cosse #6 — 1/4", qty: 1 }
+    ]
+  },
+  {
+    po: "2273",
+    supplier: "brewers",
+    poDate: "2026-04-20",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "131525", desc: "Ancor Câble marin #14/3 — 250 pieds", qty: 2 },
+      { sku: "BS5026", desc: "Blue Sea Bloc fusibles ATO 12 circuits avec mise à la terre", qty: 20 },
+      { sku: "BS2127", desc: "Blue Sea MaxiBus 4 x goujons 5/16", qty: 10 },
+      { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 13 },
+      { sku: "121140", desc: "Ancor Câble marin #10/2 — 400 pieds", qty: 7 },
+      { sku: "121350", desc: "Ancor Câble marin #12/2 — 500 pieds", qty: 1 },
+      { sku: "121550", desc: "Ancor Câble marin #14/2 — 500 pieds", qty: 5 }
+    ]
+  },
+  {
+    po: "2286",
+    supplier: "techspan",
+    poDate: "2026-05-08",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "s#4/0 lug3/8", desc: "Cosse #4/0 — 3/8", qty: 20 },
+      { sku: "s#2/0 lug 5/16", desc: "Cosse #2/0 — 5/16", qty: 100 },
+      { sku: "s#2 lug 5/16", desc: "Cosse #2 — 5/16", qty: 60 },
+      { sku: "s#4 lug 1/4", desc: "Cosse #4 — 1/4", qty: 100 },
+      { sku: "s#4 lug 5/16", desc: "Cosse #4 — 5/16", qty: 100 },
+      { sku: "s#6 lug 5/16", desc: "Cosse #6 — 5/16", qty: 160 },
+      { sku: "sbreaker63", desc: "Disjoncteur 60 A surface", qty: 40 },
+      { sku: "s#769758B", desc: "Prise mâle 110 V", qty: 10 },
+      { sku: "669952", desc: "Gaine thermorétractable 1/2", qty: 2 },
+      { sku: "761352", desc: "Connecteur rapide femelle isolé PVC (rouge)", qty: 100 },
+      { sku: "762093M", desc: "Connecteur rapide femelle isolé PVC (jaune)", qty: 1000 },
+      { sku: "767047c", desc: "Serre-câbles nylon noirs 1/2 x 1/2 (100/pqt)", qty: 100 },
+      { sku: "767077c", desc: "Serre-câbles nylon noirs 5/8 x 1/2 (100/pqt)", qty: 100 },
+      { sku: "767054c", desc: "Serre-câbles nylon noirs 3/8 x 3/8 (100/pqt)", qty: 300 },
+      { sku: "692671", desc: "Couvre-bornes de batterie 3/0-4/0GA droits (1 noir + 1 rouge)", qty: 5 },
+      { sku: "s#6 lug 1/4", desc: "Cosse #6 — 1/4", qty: 20 }
+    ]
+  },
+  {
+    po: "2288",
+    supplier: "camco",
+    poDate: "2026-05-13",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "T11800", desc: "Kuuma chauffe-eau 5 gallons 120V avec échangeur de chaleur, montage latéral (UL)", qty: 10 },
+      { sku: "T11811", desc: "Kuuma chauffe-eau 6 gallons 120V avec échangeur de chaleur, montage Av/Ar (UL)", qty: 20 }
+    ]
+  },
+  {
+    po: "2292",
+    supplier: "sok",
+    poDate: "2026-05-19",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Batteries LiFePO4 — 683 unités (transit maritime depuis la Chine)",
+    items: [
+      { sku: "SK12V314PH", desc: "SOK Batterie LiFePO4 314 Ah 12V Bluetooth autochauffante — Victron Com", qty: 228 },
+      { sku: "SK12V206PH", desc: "SOK Batterie LiFePO4 206 Ah 12V Bluetooth autochauffante — boîtier plastique", qty: 64 },
+      { sku: "SK24V150PH", desc: "SOK Batterie LiFePO4 150 Ah 24V Bluetooth autochauffante — Victron Com", qty: 48 },
+      { sku: "SK12V206H", desc: "SOK Batterie LiFePO4 206 Ah 12V Bluetooth autochauffante — boîtier métal", qty: 144 },
+      { sku: "SK12V100PCH", desc: "SOK Batterie LiFePO4 100 Ah Bluetooth autochauffante — boîtier transparent scellé", qty: 180 },
+      { sku: "SKTC30", desc: "SOK Moniteur de batterie intelligent 10V–100V (shunt 500 A)", qty: 3 },
+      { sku: "SK12V314PHBTI", desc: "Câble prolongé batterie SK12V314PH vers Cerbo-GX — 30 pi", qty: 10 },
+      { sku: "SK48V100N", desc: "SOK Batterie LiFePO4 48V 100 Ah — Server Rack", qty: 1 },
+      { sku: "SK48V18A", desc: "Chargeur SOK pour batterie LiFePO4 48V", qty: 1 },
+      { sku: "SK4S100", desc: "SOK BMS nouvelle version", qty: 4 }
+    ]
+  },
+  {
+    po: "2296",
+    supplier: "victron",
+    poDate: "2026-05-20",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "BPC121315106", desc: "Victron Blue Smart IP67 — chargeur 12/13(1) 120V NEMA 5-15", qty: 15 },
+      { sku: "SCC110030210", desc: "Victron SmartSolar MPPT 100/30", qty: 5 },
+      { sku: "CYR010230010R", desc: "Victron Cyrix-ct 12/24V-230A — combineur de batteries intelligent", qty: 11 },
+      { sku: "ASS030530010", desc: "Victron Interface VE.Direct vers USB", qty: 11 },
+      { sku: "ASS030530250", desc: "Victron Câble VE.Direct 5 m", qty: 10 },
+      { sku: "ORI121217050", desc: "Victron Orion XS 12/12-50A — chargeur de batterie DC-DC", qty: 15 },
+      { sku: "ORI241220200R", desc: "Victron Orion-Tr 24/12-20 (240W) — convertisseur DC-DC", qty: 4 },
+      { sku: "CIP000100001", desc: "Victron Porte-fusible pour MEGA-fuse", qty: 3 },
+      { sku: "PMP122305102", desc: "Victron MultiPlus-II 12/3000/120-50 — 2x120V (UL 458)", qty: 2 },
+      { sku: "ASS030064981", desc: "Victron Câble RJ45 UTP 3 m", qty: 1 },
+      { sku: "ASS030530218", desc: "Victron Câble VE.Direct 1.8 m", qty: 10 },
+      { sku: "BPC121031104R", desc: "Victron Blue Smart IP65 — chargeur 12/10(1) 120V NEMA 1-15P", qty: 1 },
+      { sku: "BPP900450110", desc: "Victron Cerbo GX MK2", qty: 20 },
+      { sku: "BPP900480100", desc: "Victron Ekrano GX", qty: 1 },
+      { sku: "BPP900495100", desc: "Victron Ekrano GX — support mural", qty: 1 },
+      { sku: "GSM100200400", desc: "Victron GX LTE 4G-A", qty: 1 },
+      { sku: "LYN020102010", desc: "Victron Lynx Power In (M10)", qty: 1 },
+      { sku: "ORI241224110", desc: "Victron Orion-Tr 24/12-20A (240W) — convertisseur DC-DC isolé", qty: 1 },
+      { sku: "ORI241240021", desc: "Victron Orion 24/12-40A — convertisseur DC-DC (Uout=13.2V)", qty: 1 },
+      { sku: "SCC110020160R", desc: "Victron SmartSolar MPPT 100/20 (jusqu'à 48V)", qty: 10 },
+      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 10 },
+      { sku: "SCC115045212", desc: "Victron SmartSolar MPPT 150/45", qty: 5 },
+      { sku: "SCC115070411", desc: "Victron SmartSolar MPPT 150/70-Tr VE.Can", qty: 3 },
+      { sku: "SHU065150050", desc: "Victron SmartShunt 500A/50mV IP65", qty: 1 },
+      { sku: "BPC120731104R", desc: "Victron Blue Smart IP65 — chargeur 12/7(1) 120V NEMA 1-15P", qty: 1 },
+      { sku: "BPP900455070", desc: "Victron GX Touch 70", qty: 15 },
+      { sku: "LYN060102010", desc: "Victron Lynx Distributor (M10)", qty: 10 },
+      { sku: "BAM030712000", desc: "Victron Battery Monitor BMV-712 Smart", qty: 2 }
+    ]
+  },
+  {
+    po: "2300",
+    supplier: "victron",
+    poDate: "2026-05-26",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "SCC110030210", desc: "Victron SmartSolar MPPT 100/30", qty: 45 },
+      { sku: "SCC075015060R", desc: "Victron SmartSolar MPPT 75/15", qty: 10 },
+      { sku: "CIP138080020", desc: "Victron MEGA-fuse 80A/80V (paquet de 5)", qty: 4 },
+      { sku: "BPC123047102", desc: "Victron Blue Smart IP22 — chargeur 12/30(1) 120V NEMA 5-15", qty: 10 },
+      { sku: "CIP138300020", desc: "Victron MEGA-fuse 300A/80V (paquet de 5)", qty: 8 },
+      { sku: "ORI241220200R", desc: "Victron Orion-Tr 24/12-20 (240W) — convertisseur DC-DC", qty: 4 },
+      { sku: "ORI241260020", desc: "Victron Orion 24/12-60 — convertisseur DC-DC IP20 (Uout=13.2V)", qty: 1 },
+      { sku: "ORI482428110", desc: "Victron Orion-Tr 48/24-12A (280W) — convertisseur DC-DC isolé", qty: 1 },
+      { sku: "SCC115060211", desc: "Victron SmartSolar MPPT 150/60-Tr", qty: 3 },
+      { sku: "SCC115085411", desc: "Victron SmartSolar MPPT 150/85-Tr VE.Can", qty: 3 },
+      { sku: "SHU050150050", desc: "Victron SmartShunt 500A/50mV", qty: 1 },
+      { sku: "ORI121217050", desc: "Victron Orion XS 12/12-50A — chargeur de batterie DC-DC", qty: 10 },
+      { sku: "PMP482505120", desc: "Victron MultiPlus-II 48/5000/70-95 120V (UL 1741)", qty: 1 },
+      { sku: "BPP900455050", desc: "Victron GX Touch 50", qty: 18 },
+      { sku: "PIN122122500", desc: "Victron Phoenix Inverter 12/1200 120V VE.Direct NEMA 5-15R", qty: 1 },
+      { sku: "ORI122420020", desc: "Victron Orion 12/24-20 — convertisseur DC-DC IP20", qty: 1 }
+    ]
+  },
+  {
+    po: "2309",
+    supplier: "dometic",
+    poDate: "2026-06-04",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "d9620017662", desc: "Dometic Air climatisé RTX 2000 Blanc 12V — 6 824 BTU", qty: 4 },
+      { sku: "d9620015927", desc: "Dometic FreshJet 5 Series — climatiseur 15 000 BTU profil bas, mécanique", qty: 2 },
+      { sku: "d9105304487", desc: "Dometic Universal Air Distribution Box (application non gainée)", qty: 2 },
+      { sku: "d9930000009", desc: "Dometic Freshjet — kit ADB avec thermostat manuel intégré", qty: 1 },
+      { sku: "dDM2872L", desc: "Dometic Réfrigérateur propane/120V — 227 L / 8 pi³ contour noir, pentures à gauche", qty: 1 },
+      { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver, pentures à droite", qty: 2 },
+      { sku: "DNRX0080C", desc: "Dometic Réfrigérateur 12V/24V — 75 L / 2.7 pi³ Dark Silver, pentures à droite", qty: 1 }
+    ]
+  },
+  {
+    po: "2313",
+    supplier: "pines",
+    poDate: "2026-06-11",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "50 cooling units — neufs et remis à neuf",
+    items: [
+      { sku: "cupn1350SL", desc: "Cooling unit neuf Dometic 1350SL (garantie 3 ans)", qty: 2 },
+      { sku: "cupn1292", desc: "Cooling unit neuf Dometic 1292-7732 (garantie 3 ans)", qty: 2 },
+      { sku: "cu841-1T90", desc: "Cooling unit remis à neuf N841-821-811-982-9183 (garantie 3 ans)", qty: 3 },
+      { sku: "cu2552", desc: "Cooling unit remis à neuf RM2552-2554-2551 (garantie 3 ans)", qty: 4 },
+      { sku: "cu2652", desc: "Cooling unit remis à neuf RM2652-3662-2662-2672 (garantie 3 ans)", qty: 16 },
+      { sku: "cu2301", desc: "Cooling unit remis à neuf 2301-2310-360 (garantie 1 an)", qty: 2 },
+      { sku: "cupn1350", desc: "Cooling unit neuf Dometic 1350 (garantie 3 ans)", qty: 3 },
+      { sku: "cu611-2T45", desc: "Cooling unit remis à neuf N611-610 (garantie 3 ans)", qty: 3 },
+      { sku: "cu641-1T90", desc: "Cooling unit remis à neuf N641-621-9162-962 (garantie 3 ans)", qty: 2 },
+      { sku: "cupn1200", desc: "Cooling unit neuf Norcold 1200-1201 (garantie 3 ans)", qty: 1 },
+      { sku: "cupn1210", desc: "Cooling unit neuf Norcold 1210-1211 (garantie 3 ans)", qty: 4 },
+      { sku: "cupn2652", desc: "Cooling unit neuf Dometic 2652 (garantie 3 ans)", qty: 1 },
+      { sku: "cu2352", desc: "Cooling unit remis à neuf RM2352 (garantie 1 an)", qty: 1 },
+      { sku: "cu2604", desc: "Cooling unit remis à neuf RM2604-2607-2611-2612 (garantie 3 ans)", qty: 1 },
+      { sku: "cu2852", desc: "Cooling unit remis à neuf RM2852-2862-3862-NDR1062-2872 (garantie 3 ans)", qty: 3 },
+      { sku: "cunx8", desc: "Cooling unit remis à neuf NX8 (garantie 3 ans)", qty: 2 }
+    ]
+  },
+  {
+    po: "2314",
+    supplier: "victron",
+    poDate: "2026-06-11",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "ORI121221040", desc: "Victron Orion XS 12/12-70A — chargeur de batterie DC-DC", qty: 60 },
+      { sku: "SCC110030210", desc: "Victron SmartSolar MPPT 100/30", qty: 20 },
+      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 10 },
+      { sku: "ASS030530209", desc: "Victron Câble VE.Direct 0.9 m", qty: 50 },
+      { sku: "CIP138060020", desc: "Victron MEGA-fuse 60A/80V (paquet de 5)", qty: 2 },
+      { sku: "ORI121217050", desc: "Victron Orion XS 12/12-50A — chargeur de batterie DC-DC", qty: 32 },
+      { sku: "ORI122410020", desc: "Victron Orion 12/24-10 — convertisseur DC-DC IP20", qty: 2 },
+      { sku: "LYN040102110", desc: "Victron Lynx Shunt VE.Can (M10)", qty: 2 },
+      { sku: "ASS030530218", desc: "Victron Câble VE.Direct 1.8 m", qty: 1 },
+      { sku: "ASS030064921", desc: "Victron Câble RJ45 UTP 0.9 m", qty: 25 },
+      { sku: "ORI241260020", desc: "Victron Orion 24/12-60 — convertisseur DC-DC IP20 (Uout=13.2V)", qty: 3 },
+      { sku: "PMP122305102", desc: "Victron MultiPlus-II 12/3000/120-50 — 2x120V (UL 458)", qty: 1 }
+    ]
+  },
+  {
+    po: "2315",
+    supplier: "nova-kool",
+    poDate: "2026-06-12",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "42 unités",
+    items: [
+      { sku: "R1200", desc: "Nova Kool Réfrigérateur 12V/24V — 34 L / 1.2 pi³ insertion S/S", qty: 1 },
+      { sku: "R1900", desc: "Nova Kool Réfrigérateur 12V/24V — 53.8 L / 1.9 pi³ Noir", qty: 2 },
+      { sku: "R3802", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir sans congélateur", qty: 2 },
+      { sku: "R4500", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir", qty: 8 },
+      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim congélateur tiroir", qty: 10 },
+      { sku: "RFU7100D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim congélateur tiroir", qty: 2 },
+      { sku: "RFU6800", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir", qty: 4 },
+      { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 2 },
+      { sku: "RFU9000", desc: "Nova Kool Réfrigérateur 12V/24V — 258 L / 9.1 pi³ Noir", qty: 6 },
+      { sku: "R3800", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir", qty: 3 },
+      { sku: "RFS7501", desc: "Nova Kool Réfrigérateur 12V/24V — 212.4 L / 7.5 pi³ Noir", qty: 1 },
+      { sku: "F1900", desc: "Nova Kool Congélateur 12V/24V — 54 L / 1.9 pi³ Noir", qty: 1 }
+    ]
+  },
+  {
+    po: "2316",
+    supplier: "brewers",
+    poDate: "2026-06-18",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "131110", desc: "Ancor Câble marin #10/3 — 100 pieds", qty: 2 },
+      { sku: "131510", desc: "Ancor Câble marin #14/3 — 100 pieds", qty: 4 },
+      { sku: "113010", desc: "Ancor Câble marin #4 Noir — 100 pieds", qty: 2 },
+      { sku: "113510", desc: "Ancor Câble marin #4 Rouge — 100 pieds", qty: 4 },
+      { sku: "112510", desc: "Ancor Câble marin #6 Rouge — 100 pieds", qty: 1 },
+      { sku: "BS6006", desc: "Blue Sea Interrupteur mini ON/OFF avec bouton rouge", qty: 30 },
+      { sku: "BS7184", desc: "Blue Sea Disjoncteur 60 A", qty: 30 },
+      { sku: "BS5190", desc: "Blue Sea Fusible de borne 300 A", qty: 10 },
+      { sku: "BS5196", desc: "Blue Sea Bloc fusibles MRBF 250 A — 3 circuits communs", qty: 5 },
+      { sku: "BS5025", desc: "Blue Sea Bloc fusibles ATO 6 circuits avec mise à la terre", qty: 5 },
+      { sku: "BS2151", desc: "Blue Sea Bloc fusibles de borne 300 A — 2 fusibles", qty: 5 },
+      { sku: "BS5065", desc: "Blue Sea Porte-fusible étanche", qty: 10 }
+    ]
+  },
+  {
+    po: "2317",
+    supplier: "nova-kool",
+    poDate: "2026-06-18",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim congélateur tiroir", qty: 4 },
+      { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
+      { sku: "R3800", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir", qty: 4 }
+    ]
+  },
+  {
+    po: "2318",
+    supplier: "unique",
+    poDate: "2026-06-18",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "UGP-R30OCLP W", desc: "Unique Cuisinière propane 30 po Classic Rétro Blanc — four et grill combinés", qty: 6 },
+      { sku: "UGP-14C CM W", desc: "Unique Réfrigérateur propane — 400 L / 14 pi³ Blanc", qty: 4 },
+      { sku: "UGP-10C CM W", desc: "Unique Réfrigérateur propane — 275 L / 9.7 pi³ Blanc", qty: 2 },
+      { sku: "UGP-260L DC W", desc: "Unique Réfrigérateur 12V/24V — 260 L / 9 pi³ Blanc", qty: 1 },
+      { sku: "UGP-290L DC W", desc: "Unique Réfrigérateur 12V/24V — 290 L / 10.3 pi³ Blanc", qty: 1 },
+      { sku: "UGP-8C CM W", desc: "Unique Réfrigérateur propane — 227 L / 8 pi³ Blanc", qty: 1 }
+    ]
+  },
+  {
+    po: "2319",
+    supplier: "techspan",
+    poDate: "2026-06-19",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "sbreaker80", desc: "Disjoncteur 80 A surface", qty: 5 }
+    ]
+  },
+  {
+    po: "2320",
+    supplier: "powermax",
+    poDate: "2026-06-05",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "spm3-45", desc: "PowerMax Chargeur de batterie intelligent 3 étapes — 45A 12V", qty: 55 },
+      { sku: "spm3-55", desc: "PowerMax Chargeur de batterie intelligent 3 étapes — 55A 12V", qty: 6 },
+      { sku: "spm3-100 Lithium", desc: "PowerMax Chargeur de batterie intelligent 3 étapes — 100A 12V Lithium", qty: 6 },
+      { sku: "STS30A", desc: "Kisae Commutateur de transfert 30A 120V", qty: 12 }
+    ]
+  },
+  {
+    po: "2322",
+    supplier: "pines",
+    poDate: "2026-06-25",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "cupn1210", desc: "Cooling unit neuf Norcold 1210-1211 (garantie 3 ans)", qty: 4 },
+      { sku: "cupn1292", desc: "Cooling unit neuf Dometic 1292-7732 (garantie 3 ans)", qty: 1 },
+      { sku: "cu811-2T45", desc: "Cooling unit remis à neuf N841-821-811 (garantie 3 ans)", qty: 3 },
+      { sku: "cu2652", desc: "Cooling unit remis à neuf RM2652-3662-2662-2672 (garantie 3 ans)", qty: 4 },
+      { sku: "cupn2652", desc: "Cooling unit neuf Dometic 2652 (garantie 3 ans)", qty: 2 },
+      { sku: "cu2852", desc: "Cooling unit remis à neuf RM2852-2862-3862-NDR1062-2872 (garantie 3 ans)", qty: 2 }
+    ]
+  },
+  {
+    po: "2323",
+    supplier: "unique",
+    poDate: "2026-06-26",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "ugpp BCD-LL", desc: "Ampoule DEL — UGP-108/170/260/370", qty: 8 },
+      { sku: "ugpp CBP UB04-2", desc: "Kit allumeur piézo", qty: 2 },
+      { sku: "ugpp DL00013897", desc: "Thermostat pour réfrigérateur UGP-290L / 470L 12/24 DC", qty: 2 },
+      { sku: "ugpp DL18301371", desc: "Module d'allumage électronique — réfrigérateurs 2/3/6C/8C/10C", qty: 2 },
+      { sku: "ugpp DL010222501465", desc: "Valve magnétique pour UGP-2/3/6C/8C/10C", qty: 1 },
+      { sku: "ugpp DWWS0231", desc: "Pieds caoutchouc pour grille — cuisinières UGP-20G/24G/30G Classic", qty: 1 }
+    ]
+  },
+  {
+    po: "2325",
+    supplier: "dometic",
+    poDate: "2026-06-26",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "d9620012875", desc: "Dometic Cadre encastré universel pour NRX 60 — noir", qty: 1 },
+      { sku: "d9610008459", desc: "Dometic WH-6EA — chauffe-eau électrique 6 gallons Essential", qty: 2 },
+      { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver, pentures à droite", qty: 4 },
+      { sku: "DNRX0130C", desc: "Dometic Réfrigérateur 12V/24V — 126 L / 4.5 pi³ Dark Silver, pentures à droite", qty: 2 },
+      { sku: "d9620017662", desc: "Dometic Air climatisé RTX 2000 Blanc 12V — 6 824 BTU", qty: 3 }
+    ]
+  },
+  {
+    po: "2328",
+    supplier: "dometic",
+    poDate: "2026-07-02",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "—", desc: "Carte électronique (board) — Dometic 1350", qty: 1 },
+      { sku: "—", desc: "Thermistor Dometic", qty: 1 }
+    ]
+  },
+  {
+    po: "2329",
+    supplier: "unique",
+    poDate: "2026-07-02",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "UGPP-DL38801070", desc: "Balcon de porte réfrigérateur/congélateur — UGP-14", qty: 2 }
+    ]
+  },
+  {
+    po: "2330",
+    supplier: "victron",
+    poDate: "2026-07-03",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 10 },
+      { sku: "PMP122305102", desc: "Victron MultiPlus-II 12/3000/120-50 — 2x120V (UL 458)", qty: 4 },
+      { sku: "SCC110030210", desc: "Victron SmartSolar MPPT 100/30", qty: 10 },
+      { sku: "QUA485021100", desc: "Victron Quattro 48/5000/70-100/100 120V VE.Bus", qty: 1 },
+      { sku: "BPC121031104R", desc: "Victron Blue Smart IP65 — chargeur 12/10(1) 120V NEMA 1-15P", qty: 20 },
+      { sku: "SCC115110411", desc: "Victron SmartSolar MPPT 150/100-Tr VE.Can", qty: 3 },
+      { sku: "CYR010400000", desc: "Victron Cyrix-i 12/24V-400A — combineur de batteries intelligent", qty: 3 },
+      { sku: "SCC115060211", desc: "Victron SmartSolar MPPT 150/60-Tr", qty: 3 },
+      { sku: "ITR000100001", desc: "Victron Autotransformer 120/240V-32A", qty: 1 },
+      { sku: "PIN122122500", desc: "Victron Phoenix Inverter 12/1200 120V VE.Direct NEMA 5-15R", qty: 4 },
+      { sku: "ASS030537010", desc: "Victron VE.Bus Smart dongle", qty: 2 },
+      { sku: "ASS030530218", desc: "Victron Câble VE.Direct 1.8 m", qty: 10 },
+      { sku: "CIP138060020", desc: "Victron MEGA-fuse 60A/80V (paquet de 5)", qty: 3 },
+      { sku: "SHU050150050", desc: "Victron SmartShunt 500A/50mV", qty: 1 },
+      { sku: "CIP138300020", desc: "Victron MEGA-fuse 300A/80V (paquet de 5)", qty: 1 },
+      { sku: "ASS030710118", desc: "Victron Câble VE.Can vers CAN-bus BMS type A — 1.8 m", qty: 5 },
+      { sku: "ASS030064951", desc: "Victron Câble RJ45 UTP 1.8 m", qty: 5 },
+      { sku: "PMP482505010", desc: "Victron MultiPlus-II 48/5000/70-50 230V", qty: 1 }
     ]
   }
 ];
