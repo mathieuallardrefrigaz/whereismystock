@@ -317,19 +317,21 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-09"; // BC 2292-2337 intégrés + expéditions Victron (AIT), Pines, Unique, Camco
+const LAST_UPDATED = "2026-07-09"; // + BC 2339 Nova Kool ; Nova Kool passe au train (lead time 4-6 sem., transit ~3 sem.) ; SOK 2292 en paquebot
 
 const SUPPLIERS = {
   "nova-kool": {
     name: "Nova Kool Mfg ULC",
     city: "Coquitlam, BC",
     carrier: "ELEMENT",
-    leadTime: 5,     // jours ouvrables PO → shipping (estimé)
-    transitMin: 7,   // jours ouvrables de transit — estimé BC → QC (LTL)
-    transitMax: 10,
+    leadTimeMin: 20, // jours ouvrables PO → shipping — MAJ 2026-07-09 : Nova Kool a présentement 4-6 semaines de lead time
+    leadTimeMax: 30,
+    transitMin: 14,  // jours ouvrables de transit — MAJ 2026-07-09 : passage au train (~3 semaines), BC → QC
+    transitMax: 16,
     color: "#0288d1",
     initials: "NK",
-    logo: "logos/novakool.png"
+    logo: "logos/novakool.png",
+    transportIcon: "🚂" // train demandé par Mathieu pour toutes les commandes Nova Kool (2026-07-09)
   },
   "victron": {
     name: "Victron Energy",
@@ -443,6 +445,18 @@ const SUPPLIERS = {
 };
 
 const ORDERS = [
+  {
+    po: "2339",
+    supplier: "nova-kool",
+    poDate: "2026-07-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Nova Kool : lead time actuel 4-6 semaines, transit par train (~3 semaines)",
+    items: [
+      { sku: "RFU6400D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir congélateur tiroir", qty: 4 }
+    ]
+  },
   {
     po: "2314",
     supplier: "victron",
@@ -596,6 +610,7 @@ const ORDERS = [
     shipDate: null,
     invoice: null,
     receivedDate: null,
+    icon: "🚢", // paquebot — expédition de Chine, demandé par Mathieu (2026-07-09)
     tagline: "Conteneur maritime — arrivée estimée vers le début septembre",
     items: [
       { sku: "SK12V314PH", desc: "SOK Batterie lithium 314 Ah 12V Bluetooth autochauffante — comm. Victron", qty: 228 },
@@ -854,21 +869,29 @@ function fmtRangeEntre(a, b) {
   return "entre le " + fmt(a) + " et le " + fmt(b);
 }
 
+function transportIcon(o, sup) {
+  return o.icon || sup.transportIcon || "🚚";
+}
+
 function orderStatus(o) {
   const sup = SUPPLIERS[o.supplier];
+  const icon = transportIcon(o, sup);
   let etaMin, etaMax, approx = false;
   if (o.shipDate) {
     const ship = parseDate(o.shipDate);
     etaMin = addBusinessDays(ship, sup.transitMin);
     etaMax = addBusinessDays(ship, sup.transitMax);
   } else if (o.poDate) {
-    const expShip = addBusinessDays(parseDate(o.poDate), sup.leadTime);
-    if (expShip < today) {
+    const leadMin = sup.leadTimeMin != null ? sup.leadTimeMin : sup.leadTime;
+    const leadMax = sup.leadTimeMax != null ? sup.leadTimeMax : sup.leadTime;
+    const expShipMin = addBusinessDays(parseDate(o.poDate), leadMin);
+    const expShipMax = addBusinessDays(parseDate(o.poDate), leadMax);
+    if (expShipMax < today) {
       // date d'expédition estimée déjà passée : à confirmer avec le fournisseur
       etaMin = etaMax = null;
     } else {
-      etaMin = addBusinessDays(expShip, sup.transitMin);
-      etaMax = addBusinessDays(expShip, sup.transitMax);
+      etaMin = addBusinessDays(expShipMin, sup.transitMin);
+      etaMax = addBusinessDays(expShipMax, sup.transitMax);
     }
     approx = true;
   } else {
@@ -884,7 +907,7 @@ function orderStatus(o) {
   } else if (etaMin && today >= etaMin) {
     status = "imminent"; label = "📍 Arrivée imminente"; cls = "imminent";
   } else {
-    status = "transit"; label = "🚚 En transit"; cls = "transit";
+    status = "transit"; label = icon + " En transit"; cls = "transit";
   }
   return { status, label, cls, etaMin, etaMax, approx };
 }
@@ -944,6 +967,7 @@ function renderChips() {
 }
 
 function journeyHTML(o, st, sup) {
+  const icon = transportIcon(o, sup);
   // Étape 1 : PO
   const poDone = true;
   const poDate = o.poDate ? fmtFull(parseDate(o.poDate)) : "—";
@@ -952,9 +976,13 @@ function journeyHTML(o, st, sup) {
   let shipTtl, shipTxt, shipCls;
   if (shipped) { shipTtl = "Expédié"; shipTxt = fmtFull(parseDate(o.shipDate)); shipCls = ""; }
   else if (o.poDate) {
-    const expShip = addBusinessDays(parseDate(o.poDate), sup.leadTime);
-    if (expShip < today) { shipTtl = "Expédition"; shipTxt = "à confirmer"; shipCls = "pending"; }
-    else { shipTtl = "Expédition prévue vers"; shipTxt = "le " + fmt(expShip); shipCls = "approx"; }
+    const leadMin = sup.leadTimeMin != null ? sup.leadTimeMin : sup.leadTime;
+    const leadMax = sup.leadTimeMax != null ? sup.leadTimeMax : sup.leadTime;
+    const expShipMin = addBusinessDays(parseDate(o.poDate), leadMin);
+    const expShipMax = addBusinessDays(parseDate(o.poDate), leadMax);
+    if (expShipMax < today) { shipTtl = "Expédition"; shipTxt = "à confirmer"; shipCls = "pending"; }
+    else if (leadMin !== leadMax) { shipTtl = "Expédition prévue vers"; shipTxt = fmtRangeEntre(expShipMin, expShipMax); shipCls = "approx"; }
+    else { shipTtl = "Expédition prévue vers"; shipTxt = "le " + fmt(expShipMax); shipCls = "approx"; }
   }
   else { shipTtl = "Expédition"; shipTxt = "en attente"; shipCls = "pending"; }
   // Étape 3 : Arrivée
@@ -988,14 +1016,14 @@ function journeyHTML(o, st, sup) {
       <div class="line"><div class="fill" style="transform:scaleX(${leg1Fill})"></div></div>
     </div>
     <div class="step ${stepShip}">
-      <div class="ic">🚚</div>
+      <div class="ic">${icon}</div>
       <div class="ttl">${shipTtl}</div>
       <div class="dt ${shipCls}">${shipTxt}</div>
     </div>
     <div class="leg ${shipped ? "" : "dashed"}">
       <div class="line"><div class="fill" style="transform:scaleX(${leg2Fill})"></div></div>
       ${truckPos !== null
-        ? `<span class="truck-move" style="left:${truckPos}%">🚚<span class="route-tag ${truckPos > 55 ? "left" : "right"}">${sup.city} → Granby, QC</span></span>`
+        ? `<span class="truck-move" style="left:${truckPos}%">${icon}<span class="route-tag ${truckPos > 55 ? "left" : "right"}">${sup.city} → Granby, QC</span></span>`
         : `<div class="route">${sup.city} → Granby, QC</div>`}
     </div>
     <div class="step ${stepArr}">
