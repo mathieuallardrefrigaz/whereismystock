@@ -541,6 +541,7 @@ const ORDERS = [
     po: "2298 / 2305",
     supplier: "nova-kool",
     poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : date inconnue)
+    poDetails: [{ po: "2298", date: null }, { po: "2305", date: "2026-06-03" }],
     shipDate: "2026-07-03",
     carrier: "RADIUS",
     invoice: "C00075758, C00075759, C00075765",
@@ -559,6 +560,7 @@ const ORDERS = [
     po: "2270 / 2281",
     supplier: "nova-kool",
     poDate: null,             // déposer purorder_2270 / purorder_2281 pour compléter
+    poDetails: [{ po: "2270", date: null }, { po: "2281", date: null }],
     shipDate: "2026-06-26",
     carrier: "ELEMENT/VAN",
     invoice: "C00075730, C00075731, C00075732, C00075736",
@@ -874,6 +876,16 @@ function fmtRangeEntre(a, b) {
     return "entre le " + a.getDate() + " et le " + fmt(b);
   return "entre le " + fmt(a) + " et le " + fmt(b);
 }
+// Pour un groupage (plusieurs BC dans une même carte) : chaque BC affiche sa propre date
+function joinFr(arr) {
+  if (arr.length <= 1) return arr.join("");
+  return arr.slice(0, -1).join(", ") + " et " + arr[arr.length - 1];
+}
+function poDetailsHTML(poDetails) {
+  return joinFr(poDetails.map(p =>
+    `<b>${p.po}</b> ${p.date ? "le " + fmtFull(parseDate(p.date)) : "<i>date à confirmer</i>"}`
+  ));
+}
 
 function transportIcon(o, sup) {
   return o.icon || sup.transportIcon || "🚚";
@@ -1083,7 +1095,7 @@ function renderList(visible) {
             : `<div class="supplier-dot" style="background:${sup.color}" title="${sup.name}">${sup.initials}</div>`}
         </div>
         <div class="ship-meta">
-          <span>Bon${o.po.includes("/") ? "s" : ""} de commande <b>${hl(o.po)}</b></span>
+          <span>Bon${o.po.includes("/") ? "s" : ""} de commande ${o.poDetails ? poDetailsHTML(o.poDetails) : `<b>${hl(o.po)}</b>`}</span>
           ${o.invoice ? `<span>Facture fournisseur <b>${hl(o.invoice)}</b></span>` : ""}
           ${(o.carrier || sup.carrier) !== "—" ? `<span>Transporteur <b>${o.carrier || sup.carrier}</b></span>` : ""}
           ${o.tagline ? `<span style="color:#6d28d9;font-weight:600">${o.tagline}</span>` : ""}
