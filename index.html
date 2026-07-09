@@ -135,7 +135,7 @@
     font-weight: 700; color: #fff; font-size: .95rem;
     flex-shrink: 0;
   }
-  .supplier-logo { height: 34px; max-width: 140px; object-fit: contain; flex-shrink: 0; }
+  .supplier-logo { height: 40px; max-width: 170px; object-fit: contain; flex-shrink: 0; }
   .supplier-badge .name { font-weight: 700; font-size: 1.05rem; }
   .supplier-badge .from { font-size: .8rem; color: var(--muted); }
   .ship-meta {
@@ -213,8 +213,8 @@
   }
   .leg.dashed .line { background: repeating-linear-gradient(90deg, var(--border) 0 8px, transparent 8px 16px); }
   .leg .route {
-    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
-    font-size: .76rem; color: var(--muted); white-space: nowrap; font-weight: 600;
+    position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+    font-size: .74rem; color: var(--muted); white-space: nowrap; font-weight: 600;
   }
   .leg .truck-move {
     position: absolute; top: 50%;
@@ -222,6 +222,13 @@
     font-size: 1.3rem;
     filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
   }
+  .route-tag {
+    position: absolute; top: 50%; transform: translateY(-42%);
+    font-size: .72rem; color: var(--muted); font-weight: 600;
+    white-space: nowrap;
+  }
+  .route-tag.right { left: calc(100% + 7px); }
+  .route-tag.left { right: calc(100% + 7px); }
 
   .eta-line {
     text-align: center;
@@ -379,7 +386,7 @@ const ORDERS = [
     shipDate: null,
     invoice: null,
     receivedDate: null,
-    tagline: "Bon de commande partiellement reçu — il ne reste que ces items à recevoir",
+    tagline: "Partiellement expédié, en attente des items suivants",
     items: [
       { sku: "ORI121221040", desc: "Victron Orion XS 12/12-70A — chargeur de batterie DC-DC", qty: 60 }
     ]
@@ -698,9 +705,10 @@ function journeyHTML(o, st, sup) {
       <div class="dt ${shipCls}">${shipTxt}</div>
     </div>
     <div class="leg ${shipped ? "" : "dashed"}">
-      <div class="route">${sup.city} → Granby, QC</div>
       <div class="line"><div class="fill" style="transform:scaleX(${leg2Fill})"></div></div>
-      ${truckPos !== null ? `<span class="truck-move" style="left:${truckPos}%">🚚</span>` : ""}
+      ${truckPos !== null
+        ? `<span class="truck-move" style="left:${truckPos}%">🚚<span class="route-tag ${truckPos > 55 ? "left" : "right"}">${sup.city} → Granby, QC</span></span>`
+        : `<div class="route">${sup.city} → Granby, QC</div>`}
     </div>
     <div class="step ${stepArr}">
       <div class="ic">${LOGO_SVG}</div>
@@ -738,16 +746,13 @@ function renderList(visible) {
       <div class="ship-head">
         <div class="supplier-badge">
           ${sup.logo
-            ? `<img class="supplier-logo" src="${sup.logo}" alt="${sup.name}" onerror="this.outerHTML='<div class=\\'supplier-dot\\' style=\\'background:${sup.color}\\'>${sup.initials}</div>'">`
-            : `<div class="supplier-dot" style="background:${sup.color}">${sup.initials}</div>`}
-          <div>
-            <div class="name">${hl(sup.name)}</div>
-            <div class="from">Depuis ${sup.city}${(o.carrier || sup.carrier) !== "—" ? " · Transporteur : " + (o.carrier || sup.carrier) : ""}</div>
-          </div>
+            ? `<img class="supplier-logo" src="${sup.logo}" alt="${sup.name}" title="${sup.name}" onerror="this.outerHTML='<div class=\\'supplier-dot\\' style=\\'background:${sup.color}\\' title=\\'${sup.name}\\'>${sup.initials}</div>'">`
+            : `<div class="supplier-dot" style="background:${sup.color}" title="${sup.name}">${sup.initials}</div>`}
         </div>
         <div class="ship-meta">
           <span>Bon de commande <b>${hl(o.po)}</b></span>
           ${o.invoice ? `<span>Facture fournisseur <b>${hl(o.invoice)}</b></span>` : ""}
+          ${(o.carrier || sup.carrier) !== "—" ? `<span>Transporteur <b>${o.carrier || sup.carrier}</b></span>` : ""}
           ${o.tagline ? `<span style="color:#6d28d9;font-weight:600">${o.tagline}</span>` : ""}
         </div>
         <span class="badge ${st.cls}">${st.label}</span>
