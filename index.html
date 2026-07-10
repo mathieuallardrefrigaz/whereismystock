@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-09"; // + BC 2339 Nova Kool (train) ; SOK par défaut en paquebot, exception 2337 (camion, Chino CA)
+const LAST_UPDATED = "2026-07-10"; // + BC 2340 Kisae Technology (nouveau fournisseur) + BC 2341 Brewers
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -445,6 +445,16 @@ const SUPPLIERS = {
     transitMax: 2,
     color: "#7c2d12",
     initials: "NW"
+  },
+  "kisae": {
+    name: "Kisae Technology",
+    city: "Surrey, BC",
+    carrier: "—",
+    leadTime: 5,      // jours ouvrables BC → expédition (estimé, nouveau fournisseur)
+    transitMin: 7,     // transit BC → Granby (estimé, cross-Canada LTL)
+    transitMax: 10,
+    color: "#b45309",
+    initials: "KT"      // pas de logo pour l'instant — à ajouter via la recette Chrome
   }
 };
 
@@ -821,6 +831,50 @@ const ORDERS = [
       { sku: "#8/2", desc: "Câble marin #8/2 — au pied", qty: 4000 },
       { sku: "#3/0 N", desc: "Câble #3/0 noir — au pied", qty: 1000 },
       { sku: "#6 N", desc: "Câble #6 noir — au pied", qty: 1000 }
+    ]
+  },
+  {
+    po: "2340",
+    supplier: "kisae",
+    poDate: "2026-07-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "BIC1230100", desc: "KISAE Onduleur/chargeur bidirectionnel pur sinus 3000W — chargeur DC 100A 12V avec télécommande", qty: 3 },
+      { sku: "DMT1250", desc: "KISAE Chargeur de batterie DC-DC intelligent — 50A", qty: 10 },
+      { sku: "SW1210", desc: "KISAE Onduleur pur sinus 1000W — 12V", qty: 5 },
+      { sku: "SW1220", desc: "KISAE Onduleur pur sinus 2000W — 12V", qty: 1 },
+      { sku: "SW2420", desc: "KISAE Onduleur pur sinus 2000W — 24V", qty: 2 }
+    ]
+  },
+  {
+    po: "2341",
+    supplier: "brewers",
+    poDate: "2026-07-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "BS7210", desc: "Blue Sea Disjoncteur AA1 15A — blanc", qty: 13 },
+      { sku: "BS7220", desc: "Blue Sea Disjoncteur AA1 30A — noir", qty: 7 },
+      { sku: "BS5102", desc: "Blue Sea Fusible MEGA 125A/32V", qty: 5 },
+      { sku: "BS2719", desc: "Blue Sea Couvercle Maxibus — pour BS2127/2128", qty: 2 },
+      { sku: "BS5001", desc: "Blue Sea Porte-fusible MEGA 100-300A — avec couvercle", qty: 2 },
+      { sku: "BS5191", desc: "Blue Sea Porte-fusible terminal 300A — 1 fusible", qty: 2 },
+      { sku: "BS7216", desc: "Blue Sea Disjoncteur AA1 25A — noir", qty: 2 },
+      { sku: "BS5103", desc: "Blue Sea Fusible MEGA 150A/32V", qty: 2 },
+      { sku: "BS5107", desc: "Blue Sea Fusible MEGA 250A/32V", qty: 2 },
+      { sku: "BS5177", desc: "Blue Sea Fusible terminal 50A", qty: 1 },
+      { sku: "BS5184", desc: "Blue Sea Fusible terminal 125A", qty: 1 },
+      { sku: "BS8072", desc: "Blue Sea Panneau vierge simple — série A", qty: 1 },
+      { sku: "BS8077", desc: "Blue Sea Panneau CA principal 30A 120V — blanc", qty: 1 },
+      { sku: "111010", desc: "Ancor Câble marin #8 — noir, bobine 100 pi", qty: 1 },
+      { sku: "111510", desc: "Ancor Câble marin #8 — rouge, bobine 100 pi", qty: 1 },
+      { sku: "112010", desc: "Ancor Câble marin #6 — noir, bobine 100 pi", qty: 1 },
+      { sku: "115505", desc: "Ancor Câble marin #1 — rouge, bobine 50 pi", qty: 1 },
+      { sku: "116002", desc: "Ancor Câble marin #1/0 — noir, bobine 25 pi", qty: 1 },
+      { sku: "121750", desc: "Ancor Câble marin #16/2 — bobine 500 pi", qty: 1 }
     ]
   }
 ];
