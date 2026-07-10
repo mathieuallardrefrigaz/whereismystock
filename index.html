@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-10"; // + BC 2340 Kisae Technology (nouveau fournisseur) + BC 2341 Brewers
+const LAST_UPDATED = "2026-07-10"; // + Sprinterfreak SP1809-4999 en transit (Purolator 520645024834, expédition partielle)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -457,10 +457,51 @@ const SUPPLIERS = {
     color: "#b45309",
     initials: "KT",
     logo: "logos/kisae.png"
+  },
+  "sprinterfreak": {
+    name: "Sprinterfreak",
+    city: "St-Roch-de-l'Achigan, QC",
+    carrier: "—",
+    leadTime: 2,      // boutique en ligne QC — expédie rapidement de son entrepôt
+    transitMin: 1,     // Purolator Ground intra-Québec → Granby
+    transitMax: 2,
+    color: "#253d31",
+    initials: "SF",
+    logo: "logos/sprinterfreak.png"
   }
 };
 
 const ORDERS = [
+  {
+    // Commande Sprinterfreak SP1809-4999 — envoi 1 (expédition partielle du 10 juillet)
+    po: "SP1809-4999",
+    supplier: "sprinterfreak",
+    poDate: "2026-07-09",
+    shipDate: "2026-07-10",
+    carrier: "Purolator",
+    tracking: "520645024834",
+    trackingUrl: "https://www.purolator.com/fr/expedition/dispositif-de-reperage?pin=520645024834",
+    invoice: null,
+    receivedDate: null,
+    tagline: "Expédition partielle — le 3e ventilateur 7500K suivra dans un envoi séparé",
+    items: [
+      { sku: "6200K", desc: "Ventilateur Maxxair 6200K — Manuel — Deluxe — Fumé gris", qty: 9 },
+      { sku: "7500K", desc: "Ventilateur Maxxair 7500K — Automatique — Deluxe — Fumé gris — Télécommande", qty: 2 }
+    ]
+  },
+  {
+    // Commande Sprinterfreak SP1809-4999 — reste de la commande (non expédié)
+    po: "SP1809-4999",
+    supplier: "sprinterfreak",
+    poDate: "2026-07-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "7500K", desc: "Ventilateur Maxxair 7500K — Automatique — Deluxe — Fumé gris — Télécommande", qty: 1 }
+    ]
+  },
   {
     po: "2339",
     supplier: "nova-kool",
@@ -1157,6 +1198,7 @@ function renderList(visible) {
           <span>Bon${o.po.includes("/") ? "s" : ""} de commande ${o.poDetails ? poDetailsHTML(o.poDetails) : `<b>${hl(o.po)}</b>`}</span>
           ${o.invoice ? `<span>Facture fournisseur <b>${hl(o.invoice)}</b></span>` : ""}
           ${(o.carrier || sup.carrier) !== "—" ? `<span>Transporteur <b>${o.carrier || sup.carrier}</b></span>` : ""}
+          ${o.tracking ? `<span>N° de suivi <b>${o.trackingUrl ? `<a href="${o.trackingUrl}" target="_blank" rel="noopener" style="color:inherit">${hl(o.tracking)}</a>` : hl(o.tracking)}</b></span>` : ""}
           ${o.tagline ? `<span style="color:#6d28d9;font-weight:600">${o.tagline}</span>` : ""}
         </div>
         <span class="badge ${st.cls}">${st.label}</span>
