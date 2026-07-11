@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-10"; // + Sprinterfreak SP1809-4999 en transit (Purolator 520645024834, expédition partielle)
+const LAST_UPDATED = "2026-07-11"; // 14 BC part. exécutés (captures Sage du 11 juillet) : 13 cartes « reste » + 2330 converti en reste + BC 2343/2344 (Unique)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -458,6 +458,28 @@ const SUPPLIERS = {
     initials: "KT",
     logo: "logos/kisae.png"
   },
+  "bismar": {
+    name: "Bismar inc",
+    city: "Boucherville, QC",
+    carrier: "—",
+    leadTime: 3,      // distributeur propane QC (estimé)
+    transitMin: 1,     // transit Boucherville → Granby
+    transitMax: 2,
+    color: "#52525b",
+    initials: "BI"
+    // logo à ajouter (recette Chrome) — fallback initiales en attendant
+  },
+  "batteries-quebec": {
+    name: "Batteries du Québec",
+    city: "Québec, QC",
+    carrier: "—",
+    leadTime: 3,      // distributeur QC (estimé)
+    transitMin: 1,     // transit Québec → Granby
+    transitMax: 2,
+    color: "#1e40af",
+    initials: "BQ"
+    // logo à ajouter (recette Chrome) — fallback initiales en attendant
+  },
   "sprinterfreak": {
     name: "Sprinterfreak",
     city: "St-Roch-de-l'Achigan, QC",
@@ -505,6 +527,34 @@ const ORDERS = [
     ]
   },
   {
+    // purorder_2343.pdf (déposé le 10 juillet) — remplacement sous garantie, prix 0$
+    po: "2343",
+    supplier: "unique",
+    poDate: "2026-07-10",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Remplacement sous garantie — commande fournisseur SO-141124",
+    items: [
+      { sku: "ugpp BCD-LL", desc: "Lumière DEL (bulb) — modèles 108/170/260/370", qty: 2 }
+    ]
+  },
+  {
+    // purorder_2344.pdf (déposé le 10 juillet) — pièces de service UGP-3 / UGP-13
+    po: "2344",
+    supplier: "unique",
+    poDate: "2026-07-10",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "UGPP-DL08502329", desc: "Charnière de porte de congélateur — UGP-3 Top Mount (assemblage)", qty: 1 },
+      { sku: "UGPP-DL08502330", desc: "Charnière de porte de congélateur — UGP-3 Top Mount", qty: 1 },
+      { sku: "UGPP-DL08502319", desc: "Bouton de valve de sécurité — UGP-3 Top Mount", qty: 2 },
+      { sku: "UGP13-55", desc: "Tablette de porte inférieure — réfrigérateur UGP-13 (cabinet 2015)", qty: 1 }
+    ]
+  },
+  {
     po: "2339",
     supplier: "nova-kool",
     poDate: "2026-07-09",
@@ -526,6 +576,173 @@ const ORDERS = [
     tagline: "Partiellement expédié, en attente des items suivants",
     items: [
       { sku: "ORI121221040", desc: "Victron Orion XS 12/12-70A — chargeur de batterie DC-DC", qty: 60 }
+    ]
+  },
+  {
+    // Captures Sage du 11 juillet (BC part. exécutés — restes = colonne Reste comm.)
+    po: "2045",
+    supplier: "techspan",
+    poDate: "2025-05-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "PVR 20-1175", desc: "RVPRO Interrupteur de batterie 4 positions", qty: 3 }
+    ]
+  },
+  {
+    // Commande « Booking 2026 » — seul item en reste
+    po: "2200",
+    supplier: "bismar",
+    poDate: "2025-12-01",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "B660011", desc: "Boyau propane 1/4 x 12 pouces", qty: 2 }
+    ]
+  },
+  {
+    po: "2202",
+    supplier: "brewers",
+    poDate: "2026-01-12",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "120925", desc: "Ancor Câble marin 8/2 — bobine 250 pieds", qty: 1 },
+      { sku: "s#4/0 AncorR", desc: "Ancor Câble marin rouge #4/0 — 50 pieds (au pied)", qty: 1 }
+    ]
+  },
+  {
+    po: "2231",
+    supplier: "batteries-quebec",
+    poDate: "2026-02-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "sbatt100AGM", desc: "Batterie DM 100Ah 12V scellée AGM Groupe 27", qty: 3 }
+    ]
+  },
+  {
+    po: "2237",
+    supplier: "dometic",
+    poDate: "2026-02-20",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "d9610007184", desc: "Dometic Fan-Tastic Vent FA95 noir — avec télécommande et lumière", qty: 46 }
+    ]
+  },
+  {
+    po: "2244",
+    supplier: "techspan",
+    poDate: "2026-02-27",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "s#4 lug 1/4", desc: "Cosse (lug) #4 — 1/4", qty: 1 }
+    ]
+  },
+  {
+    po: "2273",
+    supplier: "brewers",
+    poDate: "2026-04-20",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "BS5026", desc: "Blue Sea Fuse Block ATO 12 circuits avec mise à la terre", qty: 20 },
+      { sku: "BS2127", desc: "Blue Sea MAXIBUS 4 x 5/16 STUD", qty: 10 },
+      { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 4 },
+      { sku: "121550", desc: "Ancor Câble marin #14/2 — bobine 500 pieds", qty: 2 }
+    ]
+  },
+  {
+    po: "2286",
+    supplier: "techspan",
+    poDate: "2026-05-08",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "s#4 lug 5/16", desc: "Cosse (lug) #4 — 5/16", qty: 100 },
+      { sku: "s#6 lug 5/16", desc: "Cosse (lug) #6 — 5/16", qty: 20 },
+      { sku: "767054c", desc: "Serre-câbles nylon noirs 3/8 x 3/8 (paquet de 100)", qty: 200 }
+    ]
+  },
+  {
+    po: "2288",
+    supplier: "camco",
+    poDate: "2026-05-13",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "T11800", desc: "Kuuma chauffe-eau 5 gallons 120V avec échangeur de chaleur, montage latéral (UL)", qty: 2 }
+    ]
+  },
+  {
+    // Capture Sage coupée en bas — dernière ligne du BC à confirmer
+    po: "2296",
+    supplier: "victron",
+    poDate: "2026-05-20",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "ORI241240021", desc: "Victron Orion 24/12-40A — convertisseur DC-DC (Uout=13.2V)", qty: 1 }
+    ]
+  },
+  {
+    // 2 lignes de 4 paquets en reste dans Sage — regroupées ici
+    po: "2300",
+    supplier: "victron",
+    poDate: "2026-05-26",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "CIP138300020", desc: "Victron MEGA-fuse 300A/80V (paquet de 5)", qty: 8 }
+    ]
+  },
+  {
+    po: "2309",
+    supplier: "dometic",
+    poDate: "2026-06-04",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver", qty: 2 }
+    ]
+  },
+  {
+    po: "2313",
+    supplier: "pines",
+    poDate: "2026-06-11",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "cupn1292", desc: "Cooling unit neuf Dometic 1292-7732 — garantie 3 ans", qty: 1 },
+      { sku: "cupn1210", desc: "Cooling unit neuf Norcold 1210-1211 — garantie 3 ans", qty: 3 }
     ]
   },
   {
@@ -835,32 +1052,27 @@ const ORDERS = [
     ]
   },
   {
+    // BC 2330 : l'envoi 8787133 (1 palette, 707 lb, expédié le 7 juillet) est arrivé et a été reçu dans Sage.
+    // Reste = backorder Victron (capture Sage du 11 juillet, colonne Reste comm.)
     po: "2330",
     supplier: "victron",
     poDate: "2026-07-03",
-    shipDate: "2026-07-07",   // confirmation d'expédition Victron (E-Order 8787133)
-    carrier: "AIT",
+    shipDate: null,
     invoice: null,
     receivedDate: null,
-    tagline: "Commande Victron 8787133 — expédiée en entier (1 palette, 707 lb)",
+    tagline: "Partiellement expédié, en attente des items suivants",
     items: [
-      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 10 },
-      { sku: "PMP122305102", desc: "Victron MultiPlus-II 12/3000/120-50 2x120V (UL 458)", qty: 4 },
       { sku: "SCC110030210", desc: "Victron SmartSolar MPPT 100/30", qty: 10 },
-      { sku: "QUA485021100", desc: "Victron Quattro 48/5000/70-100/100 120V VE.Bus", qty: 1 },
-      { sku: "BPC121031104R", desc: "Victron Blue Smart IP65 — chargeur 12/10(1) 120V NEMA 1-15P", qty: 20 },
-      { sku: "SCC115110411", desc: "Victron SmartSolar MPPT 150/100-Tr VE.Can", qty: 3 },
+      { sku: "BPC121031104R", desc: "Victron Blue Smart IP65 — chargeur 12/10(1) 120V NEMA 1-15P", qty: 10 },
+      { sku: "SCC115110411", desc: "Victron SmartSolar MPPT 150/100-Tr VE.Can", qty: 2 },
       { sku: "CYR010400000", desc: "Victron Cyrix-i 12/24V-400A — coupleur de batteries intelligent", qty: 3 },
-      { sku: "SCC115060211", desc: "Victron SmartSolar MPPT 150/60-Tr", qty: 3 },
       { sku: "ITR000100001", desc: "Victron Autotransformateur 120/240V-32A", qty: 1 },
-      { sku: "PIN122122500", desc: "Victron Phoenix — onduleur 12/1200 120V VE.Direct NEMA 5-15R", qty: 4 },
-      { sku: "ASS030537010", desc: "Victron VE.Bus Smart dongle", qty: 2 },
-      { sku: "ASS030530218", desc: "Victron Câble VE.Direct — 1.8 m", qty: 10 },
-      { sku: "CIP138060020", desc: "Victron MEGA-fuse 60A/80V (paquet de 5)", qty: 3 },
+      { sku: "PIN122122500", desc: "Victron Phoenix — onduleur 12/1200 120V VE.Direct NEMA 5-15R", qty: 3 },
+      { sku: "CIP138060020", desc: "Victron MEGA-fuse 60A/80V (paquet de 5)", qty: 1 },
       { sku: "SHU050150050", desc: "Victron SmartShunt 500A/50mV", qty: 1 },
       { sku: "CIP138300020", desc: "Victron MEGA-fuse 300A/80V (paquet de 5)", qty: 1 },
       { sku: "ASS030710118", desc: "Victron Câble VE.Can vers CAN-bus BMS type A — 1.8 m", qty: 5 },
-      { sku: "ASS030064951", desc: "Victron Câble RJ45 UTP — 1.8 m", qty: 5 },
+      { sku: "ASS030064951", desc: "Victron Câble RJ45 UTP — 1.8 m", qty: 2 },
       { sku: "PMP482505010", desc: "Victron MultiPlus-II 48/5000/70-50 230V", qty: 1 }
     ]
   },
