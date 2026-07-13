@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-12"; // BC 2334-2335 (Unique), 2338 (Dometic RTX), 2342 (Bismar) + E-Order Victron 8788578 intégrés
+const LAST_UPDATED = "2026-07-13"; // BC 2334-2335 (Unique), 2338 (Dometic RTX), 2342 (Bismar) + E-Order Victron 8788578 intégrés
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -622,14 +622,17 @@ const ORDERS = [
     ]
   },
   {
-    // order_confirmation_8788578.pdf (déposé le 9 juillet) — E-Order Victron confirmé, aucun BC Sage correspondant (2334 = Unique et 2342 = Bismar, vérifié le 12 juillet)
+    // E-Order Victron 8788578 (aucun BC Sage correspondant) — envoi 1 : avis d'expédition Victron du 10 juillet (26051434, entrepôt AIT, 1 boîte 232 lb, suivi Saia)
     po: "8788578",
     supplier: "victron",
     poDate: "2026-07-09",
-    shipDate: null,
+    shipDate: "2026-07-10",
+    carrier: "AIT",
+    tracking: "109212791605",
+    trackingUrl: "https://www.saia.com/track/details;pro=109212791605",
     invoice: null,
     receivedDate: null,
-    tagline: "Commande Victron 8788578 — confirmée le 9 juillet, en attente d'expédition",
+    tagline: "Expédition partielle (1 boîte, 232 lb) — 1× MEGA-fuse 200A suivra dans un envoi séparé",
     items: [
       { sku: "ORI121217050", desc: "Victron Orion XS 12/12-50A — chargeur de batterie DC-DC", qty: 32 },
       { sku: "LYN060102010", desc: "Victron Lynx Distributor (M10) — distributeur de courant", qty: 10 },
@@ -641,8 +644,20 @@ const ORDERS = [
       { sku: "CIP138300020", desc: "MEGA-fuse 300A/80V (paquet de 5)", qty: 2 },
       { sku: "ORI122410020", desc: "Victron Orion 12/24-10 — convertisseur DC-DC IP20", qty: 10 },
       { sku: "ASS030530218", desc: "Câble VE.Direct 1,8 m", qty: 10 },
-      { sku: "CIP138200020", desc: "MEGA-fuse 200A/80V (paquet de 5)", qty: 1 },
       { sku: "ASS030530209", desc: "Câble VE.Direct 0,9 m", qty: 10 }
+    ]
+  },
+  {
+    // E-Order Victron 8788578 — reste de la commande (backorder, non expédié)
+    po: "8788578",
+    supplier: "victron",
+    poDate: "2026-07-09",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants",
+    items: [
+      { sku: "CIP138200020", desc: "MEGA-fuse 200A/80V (paquet de 5)", qty: 1 }
     ]
   },
   {
