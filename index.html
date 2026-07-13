@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-13"; // Réceptions Sage : BC 2325 (3× RTX 2000 reçus), BC 2326 (1× RTX 2000 reçu), BC 2341 Brewers quasi complet (reste 2× fusible MEGA 125A)
+const LAST_UPDATED = "2026-07-13"; // BC 2345 et 2346 Nova Kool ajoutés; réception Noramco 111093497 sur BC 2336 (reste 750 pi de câble #3/0 noir)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -494,6 +494,31 @@ const SUPPLIERS = {
 };
 
 const ORDERS = [
+  {
+    po: "2345",
+    supplier: "nova-kool",
+    poDate: "2026-07-10",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Roulottes Prolite modèles 2027",
+    items: [
+      { sku: "R3800", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir", qty: 16 },
+      { sku: "RFU6400D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir congélateur tiroir", qty: 16 }
+    ]
+  },
+  {
+    po: "2346",
+    supplier: "nova-kool",
+    poDate: "2026-07-10",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Commande spéciale — facture 26349",
+    items: [
+      { sku: "R3800 ACDC", desc: "Nova Kool Réfrigérateur R3800 avec adaptateur AC/DC", qty: 1 }
+    ]
+  },
   {
     // Commande Sprinterfreak SP1809-4999 — envoi 1 (expédition partielle du 10 juillet)
     po: "SP1809-4999",
@@ -1189,11 +1214,9 @@ const ORDERS = [
     shipDate: null,
     invoice: null,
     receivedDate: null,
-    tagline: "Confirmation fournisseur 1802334 — via Inter-Nord",
+    tagline: "Partiellement expédié, en attente des items suivants",
     items: [
-      { sku: "#8/2", desc: "Câble marin #8/2 — au pied", qty: 4000 },
-      { sku: "#3/0 N", desc: "Câble #3/0 noir — au pied", qty: 1000 },
-      { sku: "#6 N", desc: "Câble #6 noir — au pied", qty: 1000 }
+      { sku: "#3/0 N", desc: "Câble #3/0 noir — au pied", qty: 750 }
     ]
   },
   {
