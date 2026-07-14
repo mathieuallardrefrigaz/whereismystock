@@ -943,6 +943,33 @@ const ORDERS = [
     ]
   },
   {
+    // E-Order Victron 8783157 (aucun BC Sage correspondant) — avis d'expédition du 22 juin, jamais intégré jusqu'ici (retrouvé le 13 juillet, courriel manqué par tous les runs précédents car aucun flow Power Automate ne couvrait les courriels Shipping Victron)
+    po: "8783157",
+    supplier: "victron",
+    poDate: null,
+    shipDate: "2026-06-22",
+    carrier: "AIT",
+    tracking: "466538847",
+    trackingUrl: "https://www.sefl.com/webconnect/tracing?Type=PN&RefNum1=466538847",
+    invoice: null,
+    receivedDate: null,
+    tagline: "Commande Victron 8783157 — expédiée en entier (1 boîte, 480 lb)",
+    items: [
+      { sku: "ASS030064951", desc: "Victron Câble RJ45 UTP — 1.8 m", qty: 3 },
+      { sku: "ASS030530218", desc: "Victron Câble VE.Direct — 1.8 m", qty: 10 },
+      { sku: "ASS030537010", desc: "Victron VE.Bus Smart dongle", qty: 2 },
+      { sku: "BPC121031104R", desc: "Victron Blue Smart IP65 — chargeur 12/10(1) 120V NEMA 1-15P", qty: 10 },
+      { sku: "CIP138060020", desc: "Victron MEGA-fuse 60A/80V (paquet de 5)", qty: 2 },
+      { sku: "ORI241260020", desc: "Victron Orion 24/12-60 — convertisseur DC-DC IP20 (Uout=13.2V)", qty: 10 },
+      { sku: "PIN122122500", desc: "Victron Phoenix — onduleur 12/1200 120V VE.Direct NEMA 5-15R", qty: 1 },
+      { sku: "PMP122305102", desc: "Victron MultiPlus-II 12/3000/120-50 — 2x120V (UL 458)", qty: 4 },
+      { sku: "QUA485021100", desc: "Victron Quattro 48/5000/70-100/100 120V VE.Bus", qty: 1 },
+      { sku: "SCC110050210", desc: "Victron SmartSolar MPPT 100/50", qty: 10 },
+      { sku: "SCC115060211", desc: "Victron SmartSolar MPPT 150/60-Tr", qty: 3 },
+      { sku: "SCC115110411", desc: "Victron SmartSolar MPPT 150/100-Tr VE.Can", qty: 1 }
+    ]
+  },
+  {
     // Groupage RADIUS — départ 3 juillet (facture freight C00075773, 6 palettes / 2 626 lb)
     po: "2298 / 2305",
     supplier: "nova-kool",
