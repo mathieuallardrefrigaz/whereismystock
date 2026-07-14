@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-14"; // Unique SO-139344 ajouté (remplacement garantie, livraison directe Équipements Paquet)
+const LAST_UPDATED = "2026-07-14"; // 4 commandes Dometic confirmées expédiées via le portail Dometic For Business (2325, 2326, 2309, 2328)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -881,10 +881,11 @@ const ORDERS = [
     po: "2309",
     supplier: "dometic",
     poDate: "2026-06-04",
-    shipDate: null,
+    shipDate: "2026-06-24",
+    tracking: "I327207321",
     invoice: null,
     receivedDate: null,
-    tagline: "Partiellement expédié, en attente des items suivants",
+    tagline: "Expédiée en entier — confirmé via le portail Dometic For Business",
     items: [
       { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver", qty: 2 }
     ]
@@ -906,10 +907,10 @@ const ORDERS = [
     po: "2326",
     supplier: "dometic",
     poDate: "2026-06-30",
-    shipDate: null,
+    shipDate: "2026-07-13",
     invoice: null,
     receivedDate: null,
-    tagline: "Partiellement expédié, en attente des items suivants",
+    tagline: "Expédiée en entier en 5 envois distincts (6 au 13 juillet) — confirmé via le portail Dometic For Business",
     items: [
       { sku: "d9100300152", desc: "Dometic RTX 2000 — kit d'installation 12V", qty: 2 },
       { sku: "d9620017217", desc: "Dometic Freshjet 5 Noir — thermopompe 15 000 BTU", qty: 1 },
@@ -1172,10 +1173,11 @@ const ORDERS = [
     po: "2325",
     supplier: "dometic",
     poDate: "2026-06-26",
-    shipDate: null,
+    shipDate: "2026-07-07",
+    tracking: "861065030",
     invoice: null,
     receivedDate: null,
-    tagline: "Partiellement expédié, en attente des items suivants",
+    tagline: "Expédiée en entier — confirmé via le portail Dometic For Business",
     items: [
       { sku: "d9620012875", desc: "Dometic Cadre d'encastrement universel pour NRX 60 — noir", qty: 1 },
       { sku: "d9610008459", desc: "Dometic Chauffe-eau électrique WH-6EA — 6 gallons", qty: 2 },
@@ -1187,9 +1189,11 @@ const ORDERS = [
     po: "2328",
     supplier: "dometic",
     poDate: "2026-07-02",
-    shipDate: null,
+    shipDate: "2026-07-07",
+    tracking: "JD014600012732004172",
     invoice: null,
     receivedDate: null,
+    tagline: "Expédiée en entier — confirmé via le portail Dometic For Business",
     items: [
       { sku: "—", desc: "Carte électronique — réfrigérateur Dometic 1350", qty: 1 },
       { sku: "—", desc: "Thermistance — réfrigérateur Dometic", qty: 1 }
