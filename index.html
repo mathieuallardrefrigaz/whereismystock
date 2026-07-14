@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-13"; // BC 2345 et 2346 Nova Kool ajoutés; réception Noramco 111093497 sur BC 2336 (reste 750 pi de câble #3/0 noir)
+const LAST_UPDATED = "2026-07-13"; // Amazon.ca ajouté (16e fournisseur) — commande 701-6078404-7029847 expédiée
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -490,10 +490,36 @@ const SUPPLIERS = {
     color: "#253d31",
     initials: "SF",
     logo: "logos/sprinterfreak.png"
+  },
+  "amazon": {
+    name: "Amazon.ca",
+    city: "Canada",
+    carrier: "Amazon Logistics",
+    leadTime: 0,      // achats ponctuels en ligne — pas de délai PO→expédition à suivre, le courriel "Expédié" arrive déjà expédié
+    transitMin: 1,     // livraison domestique rapide (souvent "livré demain")
+    transitMax: 2,
+    color: "#FF9900",
+    initials: "AZ"
+    // logo à ajouter (recette Chrome) — fallback initiales en attendant
   }
 };
 
 const ORDERS = [
+  {
+    // Amazon.ca — commande n° 701-6078404-7029847, avis "Expédié" reçu le 13 juillet (courriel shipment-tracking@amazon.ca)
+    po: "701-6078404-7029847",
+    supplier: "amazon",
+    poDate: "2026-07-13",
+    shipDate: "2026-07-13",
+    invoice: null,
+    receivedDate: null,
+    etaMin: "2026-07-14",  // "Livraison estimée : Livré demain" indiqué dans le courriel Amazon
+    etaMax: "2026-07-14",
+    tagline: "Commande Amazon.ca n° 701-6078404-7029847 — livraison estimée demain",
+    items: [
+      { sku: "", desc: "Yaegoo Lot de 4 supports de montage", qty: 20 }
+    ]
+  },
   {
     po: "2345",
     supplier: "nova-kool",
