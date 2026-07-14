@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-14"; // BC 2237 fermé (rappel produit FTV2 résolu, confirmé par Mathieu) — Dometic : 4 commandes confirmées expédiées via le portail Dometic For Business
+const LAST_UPDATED = "2026-07-14"; // Nova Kool BC 2305 et 2315 : expéditions partielles confirmées via factures C00075795 / C00075793
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1013,10 +1013,11 @@ const ORDERS = [
     po: "2305",
     supplier: "nova-kool",
     poDate: "2026-06-03",
-    shipDate: null,
-    invoice: null,
+    shipDate: "2026-07-14",
+    carrier: "RADIUS",
+    invoice: "C00075795",
     receivedDate: null,
-    tagline: "Reste de la commande — 24 unités",
+    tagline: "Expédition partielle (RADIUS, 14 juillet, facture C00075795) — RFU9000, RFU8220 et RFU6400D (6 unités) expédiés; reste 18 unités (R3802, R4500, R5810, R4200) à venir",
     items: [
       { sku: "RFU9000", desc: "Nova Kool Réfrigérateur 12V/24V — 258 L / 9.1 pi³ Noir", qty: 1 },
       { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 1 },
@@ -1071,9 +1072,11 @@ const ORDERS = [
     po: "2315",
     supplier: "nova-kool",
     poDate: "2026-06-12",
-    shipDate: null,
-    invoice: null,
+    shipDate: "2026-07-14",
+    carrier: "RADIUS",
+    invoice: "C00075793",
     receivedDate: null,
+    tagline: "Expédition partielle (RADIUS, 14 juillet, facture C00075793) — RFU7300D (9/10), RFU7100D et RFU8220 (2 unités chacun) expédiés; reste ~30 unités à venir",
     items: [
       { sku: "R1200", desc: "Nova Kool Réfrigérateur 12V/24V — 34 L / 1.2 pi³ insertion S/S", qty: 1 },
       { sku: "R1900", desc: "Nova Kool Réfrigérateur 12V/24V — 54 L / 1.9 pi³ Noir", qty: 2 },
