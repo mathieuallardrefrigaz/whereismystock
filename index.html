@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Où est mon stock? — Solution Réfrigaz</title>
+<title>Dude, where's my stock? — Solution Réfrigaz</title>
 <style>
   :root {
     --navy: #0d2137;
@@ -285,7 +285,7 @@
 <body>
 
 <header>
-  <h1><span class="truck">🚚</span>Où est mon stock?</h1>
+  <h1><span class="truck">🚚</span>Dude, where's my stock?</h1>
   <div class="sub">Suivi des commandes fournisseurs — Solution Réfrigaz</div>
   <div class="updated" id="updated"></div>
 </header>
@@ -321,6 +321,7 @@
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
 const LAST_UPDATED = "2026-07-15"; // Correction backorders Dometic RTX 2000W : 2309 (4x recu), 2325 (tout recu, carte retiree), 2326 (2x confirme non recu)
+const LAST_UPDATED_TIME = "09:48"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1713,7 +1714,7 @@ function render() {
 document.getElementById("search").addEventListener("input", e => {
   searchTerm = e.target.value.trim(); render();
 });
-document.getElementById("updated").textContent = "Dernière mise à jour : " + fmtFull(parseDate(LAST_UPDATED));
+document.getElementById("updated").textContent = "Dernière mise à jour : " + fmtFull(parseDate(LAST_UPDATED)) + (typeof LAST_UPDATED_TIME !== "undefined" && LAST_UPDATED_TIME ? " à " + LAST_UPDATED_TIME : "");
 render();
 </script>
 </body>
