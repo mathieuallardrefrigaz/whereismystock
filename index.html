@@ -320,7 +320,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-15"; // BC 2347 (Unique), 2237 (Dometic) + expéditions Nova Kool 2315/2317, Unique 2335, Brewers 2316/2273 + backorders Dometic RTX 2000W (2309/2325/2326)
+const LAST_UPDATED = "2026-07-15"; // Correction backorders Dometic RTX 2000W : 2309 (4x recu), 2325 (tout recu, carte retiree), 2326 (2x confirme non recu)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1371,34 +1371,20 @@ const ORDERS = [
     ]
   },
   {
-    // Backorder identifié via Sales Order confirmation Dometic 101582589 — absent de la carte 2309 (déjà expédiée en entier)
+    // Backorder identifié via Sales Order confirmation Dometic 101582589 — absent de la carte 2309 (déjà expédiée en entier). RTX 2000W (4 unités) confirmé reçu par Mathieu le 15 juillet — retiré.
     po: "2309",
     supplier: "dometic",
     poDate: "2026-06-04",
     shipDate: null,
     invoice: null,
     receivedDate: null,
-    tagline: "Reste de la commande (Sales Order confirmation Dometic 101582589) — expédition prévue 2026-09-08 et 2026-10-05",
+    tagline: "Reste de la commande (Sales Order confirmation Dometic 101582589) — expédition prévue 2026-10-05",
     items: [
-      { sku: "d9620017662", desc: "Dometic RTX 2000W Onduleur pur sinus — blanc, R32 (marché É.-U.)", qty: 4 },
       { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver", qty: 2 }
     ]
   },
   {
-    // Backorder identifié via Sales Order confirmation Dometic 101590670 — absent de la carte 2325 (déjà expédiée en entier)
-    po: "2325",
-    supplier: "dometic",
-    poDate: "2026-06-26",
-    shipDate: null,
-    invoice: null,
-    receivedDate: null,
-    tagline: "Reste de la commande (Sales Order confirmation Dometic 101590670) — expédition prévue 2026-09-24",
-    items: [
-      { sku: "d9620017662", desc: "Dometic RTX 2000W Onduleur pur sinus — blanc, R32 (marché É.-U.)", qty: 3 }
-    ]
-  },
-  {
-    // Backorder identifié via Sales Order confirmation Dometic 101591892 — absent de la carte 2326 (déjà expédiée en entier)
+    // Backorder identifié via Sales Order confirmation Dometic 101591892 — absent de la carte 2326 (déjà expédiée en entier). Quantité confirmée à 2 unités par Mathieu le 15 juillet (pas encore reçues).
     po: "2326",
     supplier: "dometic",
     poDate: "2026-06-30",
@@ -1407,7 +1393,7 @@ const ORDERS = [
     receivedDate: null,
     tagline: "Reste de la commande (Sales Order confirmation Dometic 101591892) — expédition prévue 2026-09-28",
     items: [
-      { sku: "d9620017662", desc: "Dometic RTX 2000W Onduleur pur sinus — blanc, R32 (marché É.-U.)", qty: 1 }
+      { sku: "d9620017662", desc: "Dometic RTX 2000W Onduleur pur sinus — blanc, R32 (marché É.-U.)", qty: 2 }
     ]
   }
 ];
