@@ -320,8 +320,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-15"; // BC 2316 : reconciliation complete, expedie en entier (BS2151 et BS5025B recuperes) -- carte reste retiree. BC 2273 deja a jour.
-const LAST_UPDATED_TIME = "15:42"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-15"; // Clarte BC 2273 : tagline de la carte expediee ne mentionne plus "reste" (ambigu avec la carte reste separee)
+const LAST_UPDATED_TIME = "15:47"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -826,7 +826,7 @@ const ORDERS = [
     shipDate: "2026-05-28",
     invoice: "C00298182, C00298412",
     receivedDate: null,
-    tagline: "Expédition partielle (factures C00298182 15 mai et C00298412 28 mai) — reste plusieurs items à venir",
+    tagline: "Expédition partielle (factures C00298182 15 mai et C00298412 28 mai)",
     items: [
       { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 4 },
       { sku: "121550", desc: "Ancor Câble marin #14/2 — bobine 500 pieds", qty: 2 },
