@@ -320,8 +320,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // BC 2273 re-corrige contre le Reste comm. Sage (source autoritative) : 121140/121350 recus, retires; 120910/121550 encore 4/2 en souffrance
-const LAST_UPDATED_TIME = "06:05"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-16"; // Carte 2273 GoJIT (texte anomalie + epinglee en bas) + refonte affichage ville (fusionnee au libelle Expedie/Expedition)
+const LAST_UPDATED_TIME = "06:16"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -826,22 +826,6 @@ const ORDERS = [
     ]
   },
   {
-    // Facture C00298182 (15 mai) a bien expedie 120910 et 121550 au complet cote Brewers, mais Sage ne montre
-    // que 9/13 et 3/5 recus (Reste comm. 4 et 2) -- le solde ci-dessous est donc toujours en transit/a confirmer
-    // cote reception, malgre le statut "expedie" chez le fournisseur. A surveiller si "En retard" persiste.
-    po: "2273",
-    supplier: "brewers",
-    poDate: "2026-04-20",
-    shipDate: "2026-05-15",
-    invoice: "C00298182",
-    receivedDate: null,
-    tagline: "Expédition partielle (facture C00298182, 15 mai)",
-    items: [
-      { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 4 },
-      { sku: "121550", desc: "Ancor Câble marin #14/2 — bobine 500 pieds", qty: 2 }
-    ]
-  },
-  {
     po: "2286",
     supplier: "techspan",
     poDate: "2026-05-08",
@@ -1340,6 +1324,24 @@ const ORDERS = [
       { sku: "sbatt425AGM", desc: "Batterie DM 425Ah 6V scellée AGM", qty: 6 },
       { sku: "sbatt355AGM", desc: "Batterie DM 335Ah 6V scellée AGM", qty: 2 }
     ]
+  },
+  {
+    // Facture C00298182 (15 mai) a bien expedie 120910 et 121550 au complet cote Brewers, mais Sage ne montre
+    // que 9/13 et 3/5 recus (Reste comm. 4 et 2). Anomalie signalee par Mathieu le 16 juillet : livre sur la
+    // plateforme du transporteur GoJIT mais jamais receptionne dans Sage -- a valider avec Cynthia.
+    // bottom:true = epinglee en toute derniere position (voir tri dans renderList) pour ne pas polluer le haut du dashboard.
+    po: "2273",
+    supplier: "brewers",
+    poDate: "2026-04-20",
+    shipDate: "2026-05-15",
+    invoice: "C00298182",
+    receivedDate: null,
+    bottom: true,
+    tagline: "Situation anormale, valider Cynthia car matériel expédié GoJIT le 15 mai, livré sur plateforme GoJIT mais pas reçu dans Sage",
+    items: [
+      { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 4 },
+      { sku: "121550", desc: "Ancor Câble marin #14/2 — bobine 500 pieds", qty: 2 }
+    ]
   }
 ];
 
@@ -1530,19 +1532,21 @@ function journeyHTML(o, st, sup) {
   // Étape 1 : PO
   const poDone = true;
   const poDate = o.poDate ? fmtFull(parseDate(o.poDate)) : "—";
-  // Étape 2 : Expédition
+  // Étape 2 : Expédition — le libellé inclut désormais la ville d'origine (remplace le texte
+  // "Ville → Granby, QC" qui s'affichait au-dessus de la ligne de transit)
   const shipped = !!o.shipDate;
+  const originCity = resolveCity(o, sup);
   let shipTtl, shipTxt, shipCls;
-  if (shipped) { shipTtl = "Expédié"; shipTxt = fmtFull(parseDate(o.shipDate)); shipCls = ""; }
+  if (shipped) { shipTtl = "Expédié de " + originCity; shipTxt = fmtFull(parseDate(o.shipDate)); shipCls = ""; }
   else if (o.poDate) {
     const [leadMin, leadMax] = resolveLead(o, sup);
     const expShipMin = addBusinessDays(parseDate(o.poDate), leadMin);
     const expShipMax = addBusinessDays(parseDate(o.poDate), leadMax);
-    if (expShipMax < today) { shipTtl = "Expédition"; shipTxt = "à confirmer"; shipCls = "pending"; }
-    else if (leadMin !== leadMax) { shipTtl = "Expédition prévue vers"; shipTxt = fmtRangeEntre(expShipMin, expShipMax); shipCls = "approx"; }
-    else { shipTtl = "Expédition prévue vers"; shipTxt = "le " + fmt(expShipMax); shipCls = "approx"; }
+    if (expShipMax < today) { shipTtl = "Expédition de " + originCity; shipTxt = "à confirmer"; shipCls = "pending"; }
+    else if (leadMin !== leadMax) { shipTtl = "Expédition de " + originCity + " prévue"; shipTxt = fmtRangeEntre(expShipMin, expShipMax); shipCls = "approx"; }
+    else { shipTtl = "Expédition de " + originCity + " prévue"; shipTxt = "le " + fmt(expShipMax); shipCls = "approx"; }
   }
-  else { shipTtl = "Expédition"; shipTxt = "en attente"; shipCls = "pending"; }
+  else { shipTtl = "Expédition de " + originCity; shipTxt = "en attente"; shipCls = "pending"; }
   // Étape 3 : Arrivée
   const arrived = !!o.receivedDate;
   let arrTtl, arrTxt, arrCls;
@@ -1581,8 +1585,8 @@ function journeyHTML(o, st, sup) {
     <div class="leg ${shipped ? "" : "dashed"}">
       <div class="line"><div class="fill" style="transform:scaleX(${leg2Fill})"></div></div>
       ${truckPos !== null
-        ? `<span class="truck-move" style="left:${truckPos}%"><span class="veh-ico">${icon}</span><span class="route-tag ${truckPos > 55 ? "left" : "right"}">${resolveCity(o, sup)} → Granby, QC</span></span>`
-        : `<div class="route">${resolveCity(o, sup)} → Granby, QC</div>`}
+        ? `<span class="truck-move" style="left:${truckPos}%"><span class="veh-ico">${icon}</span></span>`
+        : ""}
     </div>
     <div class="step ${stepArr}">
       <div class="ic">${LOGO_SVG}</div>
@@ -1600,6 +1604,7 @@ function renderList(visible) {
   }
   // Tri : non reçues d'abord (ETA la plus proche en premier), reçues ensuite
   visible.sort((a, b) => {
+    if (!!a.bottom !== !!b.bottom) return a.bottom ? 1 : -1;
     if (!!a.receivedDate !== !!b.receivedDate) return a.receivedDate ? 1 : -1;
     const ea = orderStatus(a).etaMin, eb = orderStatus(b).etaMin;
     if (!ea) return 1; if (!eb) return -1;
