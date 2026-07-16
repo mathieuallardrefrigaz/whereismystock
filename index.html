@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // Anomalie Sprinterfreak SP1809-4999 -- livre confirme Purolator mais pas recu Sage
-const LAST_UPDATED_TIME = "11:52"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-16"; // 4 factures Nova Kool ELEMENT (C00075800-803) : BC 2298, 2305, 2315, 2317
+const LAST_UPDATED_TIME = "12:15"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1009,11 +1009,39 @@ const ORDERS = [
     ]
   },
   {
+    po: "2298",
+    supplier: "nova-kool",
+    poDate: "2026-05-25",
+    shipDate: "2026-06-26",
+    carrier: "ELEMENT",
+    invoice: "C00075800",
+    receivedDate: null,
+    tagline: "Expédition partielle (ELEMENT, 26 juin, facture C00075800)",
+    items: [
+      { sku: "R1200", desc: "Nova Kool Réfrigérateur 12V/24V — 34 L / 1.2 pi³ insertion S/S", qty: 2 }
+    ]
+  },
+  {
+    po: "2298",
+    supplier: "nova-kool",
+    poDate: "2026-05-25",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Partiellement expédié, en attente des items suivants (reconstitué du BC 2298 — aucune facture reçue à ce jour pour ces unités, à confirmer)",
+    items: [
+      { sku: "RFU6400D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir congélateur tiroir", qty: 4 },
+      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 2 },
+      { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
+      { sku: "R1600", desc: "Nova Kool Réfrigérateur 12V/24V — 36.8 L / 1.3 pi³ Noir", qty: 1 }
+    ]
+  },
+  {
     // Groupage RADIUS — départ 3 juillet (facture freight C00075773, 6 palettes / 2 626 lb)
     po: "2298 / 2305",
     supplier: "nova-kool",
-    poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : date inconnue)
-    poDetails: [{ po: "2298", date: null }, { po: "2305", date: "2026-06-03" }],
+    poDate: "2026-06-03",     // date du BC 2305 (BC 2298 : 2026-05-25)
+    poDetails: [{ po: "2298", date: "2026-05-25" }, { po: "2305", date: "2026-06-03" }],
     shipDate: "2026-07-03",
     carrier: "RADIUS",
     invoice: "C00075758, C00075759, C00075765",
@@ -1065,10 +1093,10 @@ const ORDERS = [
     supplier: "nova-kool",
     poDate: "2026-06-03",
     shipDate: "2026-07-14",
-    carrier: "RADIUS",
-    invoice: "C00075795",
+    carrier: "RADIUS/ELEMENT",
+    invoice: "C00075795, C00075802",
     receivedDate: null,
-    tagline: "Expédition partielle (RADIUS, 14 juillet, facture C00075795) — RFU9000, RFU8220 et RFU6400D (6 unités) expédiés; reste 18 unités (R3802, R4500, R5810, R4200) à venir",
+    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075795/C00075802) — RFU9000, RFU8220 et 4× RFU6400D expédiés le 14 juillet, 2× R3802 le 1er juillet (C00075802); reste 16 unités (R4500, R5810, R4200) à venir",
     items: [
       { sku: "RFU9000", desc: "Nova Kool Réfrigérateur 12V/24V — 258 L / 9.1 pi³ Noir", qty: 1 },
       { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 1 },
@@ -1125,15 +1153,15 @@ const ORDERS = [
     poDate: "2026-06-12",
     shipDate: "2026-07-14",
     carrier: "RADIUS/ELEMENT",
-    invoice: "C00075793, C00075797",
+    invoice: "C00075793, C00075797, C00075803",
     receivedDate: null,
-    tagline: "Expédition partielle (RADIUS+ELEMENT, 14 juillet, factures C00075793/C00075797) — RFU7300D (10/10), RFU7100D et RFU8220 (2 unités chacun) expédiés; reste ~29 unités à venir",
+    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075793/C00075797/C00075803) — 23 unités expédiées (10/10 RFU7300D, 2× RFU7100D, 2× RFU8220, 2× R3802, 2× RFU6800, 2× RFU9000, 3× R3800); reste 19 unités à venir",
     items: [
       { sku: "R1200", desc: "Nova Kool Réfrigérateur 12V/24V — 34 L / 1.2 pi³ insertion S/S", qty: 1 },
       { sku: "R1900", desc: "Nova Kool Réfrigérateur 12V/24V — 54 L / 1.9 pi³ Noir", qty: 2 },
       { sku: "R3802", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir sans congélateur", qty: 2 },
       { sku: "R4500", desc: "Nova Kool Réfrigérateur 12V/24V — 121.8 L / 4.3 pi³ Noir", qty: 8 },
-      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 9 },
+      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 10 },
       { sku: "RFU7100D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 2 },
       { sku: "RFU6800", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir", qty: 4 },
       { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 2 },
@@ -1148,12 +1176,12 @@ const ORDERS = [
     supplier: "nova-kool",
     poDate: "2026-06-18",
     shipDate: "2026-07-14",
-    carrier: "RADIUS",
-    invoice: "C00075796",
+    carrier: "RADIUS/ELEMENT",
+    invoice: "C00075796, C00075801",
     receivedDate: null,
-    tagline: "Expédition partielle (RADIUS, 14 juillet, facture C00075796) — 1× RFU7300D expédié; reste 11 unités à venir",
+    tagline: "Expédition partielle (RADIUS+ELEMENT, 14 juillet, factures C00075796/C00075801) — les 4 RFU7300D expédiés; reste 8 unités (R5810, R3800) à venir",
     items: [
-      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 3 },
+      { sku: "RFU7300D", desc: "Nova Kool Réfrigérateur 12V/24V — 192.5 L / 6.8 pi³ Noir Slim, congélateur tiroir", qty: 4 },
       { sku: "R5810", desc: "Nova Kool Réfrigérateur 12V/24V — 164.2 L / 5.8 pi³ insertion S/S", qty: 4 },
       { sku: "R3800", desc: "Nova Kool Réfrigérateur 12V/24V — 99 L / 3.5 pi³ Noir", qty: 4 }
     ]
