@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // Logos Amazon.ca et Batteries du Quebec ajoutes
-const LAST_UPDATED_TIME = "08:46"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-16"; // BC Sage 2349 lie aux cartes SP1809-4999 existantes (formalisation retroactive, pas une nouvelle commande)
+const LAST_UPDATED_TIME = "09:04"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -553,7 +553,11 @@ const ORDERS = [
   },
   {
     // Commande Sprinterfreak SP1809-4999 — envoi 1 (expédition partielle du 10 juillet)
-    po: "SP1809-4999",
+    // BC Sage 2349 cree le 16 juillet = formalisation retroactive de CETTE MEME commande (confirme par Mathieu :
+    // memes modeles/quantites 3x MX7500K + 9x MX6200K = total original SP1809-4999). PAS une nouvelle commande --
+    // purorder_2349.pdf NE DOIT PAS etre traite comme un BC distinct par un futur run. Permet maintenant a
+    // Cynthia de faire une vraie reception Sage sur ce PO (avant, aucun mecanisme de reception n'existait pour Sprinterfreak).
+    po: "2349 (SP1809-4999)",
     supplier: "sprinterfreak",
     poDate: "2026-07-09",
     shipDate: "2026-07-10",
@@ -571,8 +575,8 @@ const ORDERS = [
     ]
   },
   {
-    // Commande Sprinterfreak SP1809-4999 — reste de la commande (non expédié)
-    po: "SP1809-4999",
+    // Commande Sprinterfreak SP1809-4999 — reste de la commande (non expédié). Meme lien BC Sage 2349 que la carte ci-dessus.
+    po: "2349 (SP1809-4999)",
     supplier: "sprinterfreak",
     poDate: "2026-07-09",
     shipDate: null,
