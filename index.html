@@ -325,7 +325,7 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // BC 2335 (Unique) expedie en entier -- facture 023979, Canada Post, 13 juillet
+const LAST_UPDATED = "2026-07-16"; // Logos Amazon.ca et Batteries du Quebec ajoutes
 const LAST_UPDATED_TIME = "08:46"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
@@ -483,8 +483,8 @@ const SUPPLIERS = {
     transitMin: 1,     // transit Québec → Granby
     transitMax: 2,
     color: "#1e40af",
-    initials: "BQ"
-    // logo à ajouter (recette Chrome) — fallback initiales en attendant
+    initials: "BQ",
+    logo: "logos/batteries-quebec.png"
   },
   "sprinterfreak": {
     name: "Sprinterfreak",
@@ -505,8 +505,8 @@ const SUPPLIERS = {
     transitMin: 1,     // livraison domestique rapide (souvent "livré demain")
     transitMax: 2,
     color: "#FF9900",
-    initials: "AZ"
-    // logo à ajouter (recette Chrome) — fallback initiales en attendant
+    initials: "AZ",
+    logo: "logos/amazon.png"
   }
 };
 
