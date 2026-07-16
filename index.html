@@ -320,8 +320,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // Carte 2273 GoJIT (texte anomalie + epinglee en bas) + refonte affichage ville (fusionnee au libelle Expedie/Expedition)
-const LAST_UPDATED_TIME = "06:16"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-16"; // Carte 2316 GoJIT (texte anomalie + epinglee en bas), meme pattern que 2273
+const LAST_UPDATED_TIME = "06:28"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1153,29 +1153,6 @@ const ORDERS = [
     ]
   },
   {
-    po: "2316",
-    supplier: "brewers",
-    poDate: "2026-06-18",
-    shipDate: "2026-06-30",
-    invoice: "C00298916, C00298964, C00299036",
-    receivedDate: null,
-    tagline: "Expédié en entier en 3 envois distincts (23, 25 et 30 juin)",
-    items: [
-      { sku: "131110", desc: "Ancor Câble marin plat 10/3 — triplex", qty: 2 },
-      { sku: "131510", desc: "Ancor Câble marin plat 14/3 — triplex", qty: 4 },
-      { sku: "113010", desc: "Ancor Câble de batterie #4 — noir", qty: 2 },
-      { sku: "113510", desc: "Ancor Câble de batterie #4 — rouge, bobine 100 pi", qty: 4 },
-      { sku: "112510", desc: "Ancor Câble de batterie #6 — rouge", qty: 1 },
-      { sku: "BS6006", desc: "Blue Sea Interrupteur mini ON/OFF avec bouton — rouge", qty: 30 },
-      { sku: "BS7184", desc: "Blue Sea Disjoncteur 60 A", qty: 30 },
-      { sku: "BS5190", desc: "Blue Sea Fusible Terminal 300 A", qty: 10 },
-      { sku: "BS5196", desc: "Blue Sea Bloc fusible MRBF 250 A — 3 circuits communs", qty: 5 },
-      { sku: "BS5065", desc: "Blue Sea Porte-fusible étanche", qty: 10 },
-      { sku: "BS5025B", desc: "Blue Sea Bloc fusible ATO — vrac", qty: 5 },
-      { sku: "BS2151", desc: "Blue Sea Bloc fusible Terminal 300 A — 2 fusibles", qty: 5 }
-    ]
-  },
-  {
     po: "2325",
     supplier: "dometic",
     poDate: "2026-06-26",
@@ -1341,6 +1318,33 @@ const ORDERS = [
     items: [
       { sku: "120910", desc: "Ancor Câble marin 8/2 — 100 pieds", qty: 4 },
       { sku: "121550", desc: "Ancor Câble marin #14/2 — bobine 500 pieds", qty: 2 }
+    ]
+  },
+  {
+    // Anomalie signalee par Mathieu le 16 juillet (meme pattern que 2273) : livre sur la plateforme du
+    // transporteur GoJIT mais jamais receptionne dans Sage -- a valider avec Cynthia.
+    // bottom:true = epinglee en toute derniere position (voir tri dans renderList) pour ne pas polluer le haut du dashboard.
+    po: "2316",
+    supplier: "brewers",
+    poDate: "2026-06-18",
+    shipDate: "2026-06-30",
+    invoice: "C00298916, C00298964, C00299036",
+    receivedDate: null,
+    bottom: true,
+    tagline: "Situation anormale, valider Cynthia car matériel expédié GoJIT le 23 juin, livré sur plateforme GoJIT mais pas reçu dans Sage",
+    items: [
+      { sku: "131110", desc: "Ancor Câble marin plat 10/3 — triplex", qty: 2 },
+      { sku: "131510", desc: "Ancor Câble marin plat 14/3 — triplex", qty: 4 },
+      { sku: "113010", desc: "Ancor Câble de batterie #4 — noir", qty: 2 },
+      { sku: "113510", desc: "Ancor Câble de batterie #4 — rouge, bobine 100 pi", qty: 4 },
+      { sku: "112510", desc: "Ancor Câble de batterie #6 — rouge", qty: 1 },
+      { sku: "BS6006", desc: "Blue Sea Interrupteur mini ON/OFF avec bouton — rouge", qty: 30 },
+      { sku: "BS7184", desc: "Blue Sea Disjoncteur 60 A", qty: 30 },
+      { sku: "BS5190", desc: "Blue Sea Fusible Terminal 300 A", qty: 10 },
+      { sku: "BS5196", desc: "Blue Sea Bloc fusible MRBF 250 A — 3 circuits communs", qty: 5 },
+      { sku: "BS5065", desc: "Blue Sea Porte-fusible étanche", qty: 10 },
+      { sku: "BS5025B", desc: "Blue Sea Bloc fusible ATO — vrac", qty: 5 },
+      { sku: "BS2151", desc: "Blue Sea Bloc fusible Terminal 300 A — 2 fusibles", qty: 5 }
     ]
   }
 ];
