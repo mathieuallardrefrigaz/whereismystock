@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-16"; // BC Sage 2349 lie aux cartes SP1809-4999 existantes (formalisation retroactive, pas une nouvelle commande)
-const LAST_UPDATED_TIME = "09:04"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-16"; // Ajout BC 2318 (gap decouvert lors du scan recursif complet)
+const LAST_UPDATED_TIME = "09:17"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -675,6 +675,26 @@ const ORDERS = [
       { sku: "ugpp DXQJ9903", desc: "Électrode d'allumage brûleur supérieur (arrière G et D) — UGP-20G/24G/30G", qty: 2 },
       { sku: "ugpp DL10001523", desc: "Thermocouple — réfrigérateurs UGP 2/3/6/6F/8/10/14/19", qty: 8 },
       { sku: "ugpp DL18301371", desc: "Module d'allumage électronique — réfrigérateurs 2/3/6C/8C/10C", qty: 2 }
+    ]
+  },
+  {
+    // AUCUN purorder_2318.pdf trouvé dans "Bons de commande" -- BC jamais deposé en PDF par le flow Sage (avant sa creation le 13 juillet).
+    // Seule preuve : Sales Order SO-139865 (Documents fournisseurs/Unique/Sales Order), pas encore de facture -- donc pas encore expédié.
+    // Trouvé le 16 juillet lors d'un scan recursif complet suite a la reorganisation du dossier "Documents fournisseurs" en sous-dossiers par fournisseur.
+    po: "2318",
+    supplier: "unique",
+    poDate: "2026-06-23",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Électroménagers pour roulottes — cuisinières et réfrigérateurs (Sales Order SO-139865)",
+    items: [
+      { sku: "UGP-R30OCLPW", desc: "Cuisinière au propane 30\" waist-high avec gril, blanche", qty: 6 },
+      { sku: "UGP-14C CM W", desc: "Réfrigérateur au propane 14 pi³ blanc (Marshmallow White), avec détecteur CO", qty: 4 },
+      { sku: "UGP-10C CM W", desc: "Réfrigérateur au propane 10 pi³ blanc, avec détecteur CO", qty: 2 },
+      { sku: "UGP-260L W", desc: "Réfrigérateur/congélateur 12/24V DC 260 L blanc", qty: 1 },
+      { sku: "UGP-290L W", desc: "Réfrigérateur/congélateur 12/24V DC 290 L blanc", qty: 1 },
+      { sku: "UGP-8C CM W", desc: "Réfrigérateur au propane 8 pi³ blanc, avec détecteur CO et coupure de sécurité", qty: 1 }
     ]
   },
   {
