@@ -326,7 +326,7 @@
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
 const LAST_UPDATED = "2026-07-21"; // Expéditions Victron du 20 juillet : 2351/8790816 en entier (Saia) + backorder 8788578 (UPS)
-const LAST_UPDATED_TIME = "13:05"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED_TIME = "14:35"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -655,26 +655,12 @@ const ORDERS = [
     shipDate: null,
     invoice: null,
     receivedDate: null,
+    tagline: "Commande de pièces pour Équipements Paquet",
     items: [
       { sku: "UGPP-DL08502329", desc: "Charnière de porte de congélateur — UGP-3 Top Mount (assemblage)", qty: 1 },
       { sku: "UGPP-DL08502330", desc: "Charnière de porte de congélateur — UGP-3 Top Mount", qty: 1 },
       { sku: "UGPP-DL08502319", desc: "Bouton de valve de sécurité — UGP-3 Top Mount", qty: 2 },
       { sku: "UGP13-55", desc: "Tablette de porte inférieure — réfrigérateur UGP-13 (cabinet 2015)", qty: 1 }
-    ]
-  },
-  {
-    // purorder_2334.pdf (reçu par courriel le 12 juillet) — pièces de service UGP-3
-    po: "2334",
-    supplier: "unique",
-    poDate: "2026-07-08",
-    shipDate: null,
-    invoice: null,
-    receivedDate: null,
-    tagline: "Commande de pièces — distributeurs UGP",
-    items: [
-      { sku: "UGP-DL08502007", desc: "Balcon inférieur (tablette de porte) — UGP-3 Top Mount", qty: 1 },
-      { sku: "UGP-DL08502329", desc: "Charnière de porte de congélateur — UGP-3 Top Mount (assemblage)", qty: 1 },
-      { sku: "UGP-DL10001527", desc: "Pièce de service — réfrigérateur UGP", qty: 1 }
     ]
   },
   {
@@ -1366,6 +1352,41 @@ const ORDERS = [
       { sku: "UGP-385L CR W", desc: "Unique Réfrigérateur 12V/24V 385 L / 14 pi³ Rétro Blanc", qty: 25 },
       { sku: "UGP-6F CM B", desc: "Unique Congélateur propane 181 L / 6.4 pi³ Noir — détecteur CO", qty: 6 },
       { sku: "UGP-265L W", desc: "Unique Congélateur 12V/24V 265 L / 9.3 pi³ Blanc", qty: 6 }
+    ]
+  },
+  {
+    po: "2353",
+    supplier: "techspan",
+    poDate: "2026-07-16",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "s761076", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s669953", desc: "Composant électrique Techspan", qty: 3 },
+      { sku: "s762672", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s762673", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s761246J", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s761718", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s761719", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s762582", desc: "Composant électrique Techspan", qty: 1 },
+      { sku: "s769451", desc: "Connexion grise #6", qty: 4 },
+      { sku: "s769427", desc: "Composant électrique Techspan", qty: 4 },
+      { sku: "s762272", desc: "Composant électrique Techspan", qty: 5 },
+      { sku: "LUGS-4AWG-5/16", desc: "Cosse (lug) 4 AWG 5/16 — achat sur Amazon", qty: 2 }
+    ]
+  },
+  {
+    po: "2356",
+    supplier: "unique",
+    poDate: "2026-07-21",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    tagline: "Commande pour Patrick Emond (BL-7098) — livraison directe Batteries Expert Beauport, Québec",
+    items: [
+      { sku: "UGP-DL37001142", desc: "Thermostat — réfrigérateur UGP-385L", qty: 1 },
+      { sku: "UGP-DL00009409", desc: "Couvercle de lumière et boîtier de contrôle — UGP-290L/470L/385L", qty: 1 }
     ]
   },
   {
