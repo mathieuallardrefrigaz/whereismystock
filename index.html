@@ -326,7 +326,7 @@
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
 const LAST_UPDATED = "2026-07-21"; // Expéditions Victron du 20 juillet : 2351/8790816 en entier (Saia) + backorder 8788578 (UPS)
-const LAST_UPDATED_TIME = "12:20"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED_TIME = "13:05"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1354,14 +1354,17 @@ const ORDERS = [
     po: "2355",
     supplier: "unique",
     poDate: "2026-07-21",
-    shipDate: null,
+    shipDate: "2026-07-21",
     invoice: null,
     receivedDate: null,
-    tagline: "Commande spéciale — substitution des Mistral 12 et 15",
+    carrier: "Yusen Logistics",
+    etaMin: "2026-08-03",
+    etaMax: "2026-08-03",
+    tagline: "Commande spéciale — substitution des Mistral 12 et 15 (Sales Order SO-141818, camion complet 62 unités). Livraison retenue au lundi 3 août — fermeture Réfrigaz du 27 au 31 juillet",
     items: [
       { sku: "UGP-325L W", desc: "Unique Réfrigérateur 12V/24V 325 L / 11.4 pi³ Blanc — congélateur en bas, dégivrage", qty: 25 },
       { sku: "UGP-385L CR W", desc: "Unique Réfrigérateur 12V/24V 385 L / 14 pi³ Rétro Blanc", qty: 25 },
-      { sku: "UGP-6F CM B", desc: "Unique Réfrigérateur propane 181 L / 6.4 pi³ Noir", qty: 6 },
+      { sku: "UGP-6F CM B", desc: "Unique Congélateur propane 181 L / 6.4 pi³ Noir — détecteur CO", qty: 6 },
       { sku: "UGP-265L W", desc: "Unique Congélateur 12V/24V 265 L / 9.3 pi³ Blanc", qty: 6 }
     ]
   },
