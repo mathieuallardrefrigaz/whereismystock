@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-22"; // BC 2357 Nova Kool (drop-ship) + Amazon 701-5980645-9421035 expedie
-const LAST_UPDATED_TIME = "08:30"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-22"; // Factures Nova Kool C00075821 (BC 2315) + C00075822 (BC 2305) - bloquees car sender novakool@novakool.com hors flow
+const LAST_UPDATED_TIME = "14:05"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1151,9 +1151,9 @@ const ORDERS = [
     poDate: "2026-06-03",
     shipDate: "2026-07-16",
     carrier: "RADIUS/ELEMENT",
-    invoice: "C00075795, C00075802",
+    invoice: "C00075795, C00075802, C00075822",
     receivedDate: null,
-    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075795/C00075802) — RFU9000, RFU8220 et 4× RFU6400D expédiés le 14 juillet; 2× R3802 (C00075802) partis dans le groupage ELEMENT du 16 juillet (transport C00075805); reste 16 unités (R4500, R5810, R4200) à venir",
+    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075795/802/822) — 12/24 unités expédiées; reste R4500×8, R5810×4",
     items: [
       { sku: "RFU9000", desc: "Nova Kool Réfrigérateur 12V/24V — 258 L / 9.1 pi³ Noir", qty: 1 },
       { sku: "RFU8220", desc: "Nova Kool Réfrigérateur 12V/24V — 206.7 L / 7.3 pi³ Noir", qty: 1 },
@@ -1210,9 +1210,9 @@ const ORDERS = [
     poDate: "2026-06-12",
     shipDate: "2026-07-16",
     carrier: "RADIUS/ELEMENT",
-    invoice: "C00075793, C00075797, C00075803",
+    invoice: "C00075793, C00075797, C00075803, C00075821",
     receivedDate: null,
-    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075793/C00075797/C00075803) — 23 unités expédiées (10/10 RFU7300D, 2× RFU7100D, 2× RFU8220, 2× R3802, 2× RFU6800, 2× RFU9000, 3× R3800); portion C00075803 partie dans le groupage ELEMENT du 16 juillet (transport C00075805); reste 19 unités à venir",
+    tagline: "Expédition partielle (RADIUS+ELEMENT, factures C00075793/797/803/821) — 30/42 unités expédiées; reste R1200×1, R4500×8, RFU9000×2, F1900×1",
     items: [
       { sku: "R1200", desc: "Nova Kool Réfrigérateur 12V/24V — 34 L / 1.2 pi³ insertion S/S", qty: 1 },
       { sku: "R1900", desc: "Nova Kool Réfrigérateur 12V/24V — 54 L / 1.9 pi³ Noir", qty: 2 },
