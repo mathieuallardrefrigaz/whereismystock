@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-22"; // Factures Nova Kool C00075821 (BC 2315) + C00075822 (BC 2305) - bloquees car sender novakool@novakool.com hors flow
-const LAST_UPDATED_TIME = "14:05"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-23"; // Nouveau BC 2359 Dometic (6 lignes refrigerateurs/CFX5)
+const LAST_UPDATED_TIME = "16:05"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1503,6 +1503,23 @@ const ORDERS = [
       { sku: "ugpp DL010222501465", desc: "Unique Valve magnétique — UGP-2/3/6C/8C/10C", qty: 1 },
       { sku: "ugpp DWWS0231", desc: "Unique Pied en caoutchouc — grille cuisinière UGP-20G/24G/30G Classic", qty: 1 },
       { sku: "UGP-BCD-LL", desc: "Unique Ampoule DEL — réfrigérateurs UGP-108L/170L/260L/370L", qty: 6 }
+    ]
+  },
+  {
+    // purorder_2359.pdf (BC daté 23 juillet, reçu par courriel info@refrigaz.com le 23 juillet 14h31)
+    po: "2359",
+    supplier: "dometic",
+    poDate: "2026-07-23",
+    shipDate: null,
+    invoice: null,
+    receivedDate: null,
+    items: [
+      { sku: "d97000050754", desc: "Dometic Portable CFX5 35 — 12V/24V/120V, 35 L / 1.3 pi³, noir", qty: 2 },
+      { sku: "dDM2672R", desc: "Dometic Réfrigérateur propane/120V — 173 L / 6 pi³ contour noir, penture à droite", qty: 4 },
+      { sku: "DNRX0130C", desc: "Dometic Réfrigérateur 12V/24V — 126 L / 4.5 pi³ Dark Silver, pentures à droite", qty: 2 },
+      { sku: "dDM2872L", desc: "Dometic Réfrigérateur propane/120V — 227 L / 8 pi³ contour noir, pentures à gauche", qty: 1 },
+      { sku: "dDM2872R", desc: "Dometic Réfrigérateur propane/120V — 207 L / 8 pi³ contour noir, penture à droite", qty: 2 },
+      { sku: "DNRX0060C", desc: "Dometic Réfrigérateur 12V/24V — 55 L / 2 pi³ Dark Silver, pentures à droite", qty: 1 }
     ]
   }
 ];
