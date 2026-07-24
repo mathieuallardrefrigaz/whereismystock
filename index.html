@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-24"; // BC 2356 Unique expedie (facture 024431, Canada Post) -- signale par Mathieu
-const LAST_UPDATED_TIME = "06:21"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-24"; // BC 2355 revise (SO-141818 REVISED, ajout UGP-14C, corrige statut Expedie premature
+const LAST_UPDATED_TIME = "06:59"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1379,18 +1379,26 @@ const ORDERS = [
     po: "2355",
     supplier: "unique",
     poDate: "2026-07-21",
-    shipDate: "2026-07-21",
+    shipDate: null,
     invoice: null,
     receivedDate: null,
     carrier: "Yusen Logistics",
     etaMin: "2026-08-03",
     etaMax: "2026-08-03",
-    tagline: "Commande spéciale — substitution des Mistral 12 et 15 (Sales Order SO-141818, camion complet 62 unités). Livraison retenue au lundi 3 août — fermeture Réfrigaz du 27 au 31 juillet",
+    // Commande REVISEE le 23 juillet (courriel Stu 09h35) : retrait de qqs UGP-265L/UGP-385L pour faire
+    // place a 2x UGP-14C CR CM W (dont 1 a 30% de remise, unite demo showroom revendeur nord du Quebec).
+    // PDF "SRI SO-141818 REVISED.pdf" -- Ship Date planifiee 30 juillet (PAS encore expediee, un Sales
+    // Order n'est pas une preuve d'expedition -- shipDate laisse null tant qu'un avis d'expedition/facture
+    // n'est pas recu). Corrige une erreur du 21 juillet : la carte avait ete marquee "Expediee" sur la foi
+    // d'un "ce stock va etre expedie aujourd'hui" qui s'est avere premature (commande encore en revision
+    // le 22 juillet).
+    tagline: "Commande spéciale — substitution des Mistral 12 et 15 (Sales Order SO-141818 révisé le 23 juillet, camion complet). Expédition prévue le 30 juillet (Yusen Logistics), livraison prévue le lundi 3 août — fermeture Réfrigaz du 27 au 31 juillet",
     items: [
       { sku: "UGP-325L W", desc: "Unique Réfrigérateur 12V/24V 325 L / 11.4 pi³ Blanc — congélateur en bas, dégivrage", qty: 25 },
-      { sku: "UGP-385L CR W", desc: "Unique Réfrigérateur 12V/24V 385 L / 14 pi³ Rétro Blanc", qty: 25 },
+      { sku: "UGP-385L CR W", desc: "Unique Réfrigérateur 12V/24V 385 L / 14 pi³ Rétro Blanc", qty: 21 },
       { sku: "UGP-6F CM B", desc: "Unique Congélateur propane 181 L / 6.4 pi³ Noir — détecteur CO", qty: 6 },
-      { sku: "UGP-265L W", desc: "Unique Congélateur 12V/24V 265 L / 9.3 pi³ Blanc", qty: 6 }
+      { sku: "UGP-265L W", desc: "Unique Congélateur 12V/24V 265 L / 9.3 pi³ Blanc", qty: 4 },
+      { sku: "UGP-14C CR CM W", desc: "Unique Réfrigérateur propane 14 pi³ Rétro Classic Marshmallow Blanc — détecteur CO (1 unité showroom démo, 30% remise)", qty: 2 }
     ]
   },
   {
