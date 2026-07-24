@@ -325,8 +325,8 @@
    DONNÉES — mises à jour via Claude (PO du dossier « Bons de
    commande » SharePoint + factures de shipping des fournisseurs).
    ================================================================ */
-const LAST_UPDATED = "2026-07-23"; // BC 2270/2281 recus en entier (confirme par Mathieu) -- carte retiree
-const LAST_UPDATED_TIME = "16:11"; // heure de la derniere publication (HH:MM, 24h)
+const LAST_UPDATED = "2026-07-24"; // BC 2356 Unique expedie (facture 024431, Canada Post) -- signale par Mathieu
+const LAST_UPDATED_TIME = "06:21"; // heure de la derniere publication (HH:MM, 24h)
 
 const SUPPLIERS = {
   "nova-kool": {
@@ -1413,10 +1413,13 @@ const ORDERS = [
     po: "2356",
     supplier: "unique",
     poDate: "2026-07-21",
-    shipDate: null,
-    invoice: null,
+    shipDate: "2026-07-23",
+    carrier: "CANADA POST",
+    tracking: "2580306816234444",
+    trackingUrl: "https://www.canadapost-postescanada.ca/track-reperage/en#/search?searchFor=2580306816234444",
+    invoice: "024431",
     receivedDate: null,
-    tagline: "Commande pour Patrick Emond (BL-7098) — livraison directe Batteries Expert Beauport, Québec",
+    tagline: "Commande pour Patrick Emond (BL-7098) — livraison directe Batteries Expert Québec",
     items: [
       { sku: "UGP-DL37001142", desc: "Thermostat — réfrigérateur UGP-385L", qty: 1 },
       { sku: "UGP-DL00009409", desc: "Couvercle de lumière et boîtier de contrôle — UGP-290L/470L/385L", qty: 1 }
